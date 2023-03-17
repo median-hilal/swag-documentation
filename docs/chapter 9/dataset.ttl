@@ -1,0 +1,109 @@
+<http://www.wikidata.org/entity/Q1033891> <http://www.w3.org/2000/01/rdf-schema#label>  "martial arts film".
+<http://www.wikidata.org/entity/Q5516100> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q11424>.
+<http://www.wikidata.org/entity/Q5516100> <http://www.wikidata.org/prop/direct/P2142> 788679850.
+<http://www.wikidata.org/entity/Q5516100> <http://www.wikidata.org/prop/P2142> <http://www.wikidata.org/entity/statement/Q5516100-09CBAE8F-E71F-4556-9425-44B3A5DBD429>.
+<http://www.wikidata.org/entity/statement/Q5516100-09CBAE8F-E71F-4556-9425-44B3A5DBD429> <http://www.wikidata.org/prop/statement/value/P2142> <http://www.wikidata.org/value/9c06d4ca7bfc62460652f919ee49cdfa>.
+<http://www.wikidata.org/value/9c06d4ca7bfc62460652f919ee49cdfa> <http://wikiba.se/ontology#quantityAmount> 788679850.
+<http://www.wikidata.org/value/9c06d4ca7bfc62460652f919ee49cdfa> <http://wikiba.se/ontology#quantityUnit> <http://www.wikidata.org/entity/Q4917>.
+<http://www.wikidata.org/entity/statement/Q5516100-09CBAE8F-E71F-4556-9425-44B3A5DBD429> <http://www.wikidata.org/prop/qualifier/P3005> <http://www.wikidata.org/entity/Q13780930>.
+<http://www.wikidata.org/entity/Q5516100> <http://www.wikidata.org/prop/direct/boxOffice> 788679850.
+<http://www.wikidata.org/entity/Q5516100> <http://www.wikidata.org/prop/direct/P136> <http://www.wikidata.org/entity/Q188473>.
+<http://www.wikidata.org/entity/Q188473> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q201658>.
+<http://www.wikidata.org/entity/Q130232> <http://www.w3.org/2000/01/rdf-schema#label> "drama film".
+<http://www.wikidata.org/entity/Q5516100> <http://www.wikidata.org/prop/direct/P57> <http://www.wikidata.org/entity/Q551876>.
+<http://www.wikidata.org/entity/Q551876> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q5>.
+<http://www.wikidata.org/entity/Q1392744> <http://www.w3.org/2000/01/rdf-schema#label> "The Wolf of Wall Street".
+<http://www.wikidata.org/entity/Q551876> <http://www.wikidata.org/prop/direct/P21> <http://www.wikidata.org/entity/Q6581097>.
+<http://www.wikidata.org/entity/Q6581097> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q48277>.
+<http://www.wikidata.org/entity/Q157443> <http://www.w3.org/2000/01/rdf-schema#label> "comedy film".
+<http://www.wikidata.org/entity/Q5516100> <http://www.wikidata.org/prop/direct/P495> <http://www.wikidata.org/entity/Q17>.
+<http://www.wikidata.org/entity/Q17> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q6256>.
+<http://www.wikidata.org/entity/Q17> <http://www.w3.org/2000/01/rdf-schema#label> "Japan".
+<http://www.wikidata.org/entity/Q17> <http://www.wikidata.org/prop/direct/P30> <http://www.wikidata.org/entity/Q48>.
+<http://www.wikidata.org/entity/Q48> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q5107>.
+<http://www.wikidata.org/entity/Q188473> <http://www.w3.org/2000/01/rdf-schema#label> "action film".
+<http://www.wikidata.org/entity/Q5516100> <http://www.wikidata.org/prop/direct/P577> "2013-05-24T00:00:00Z".
+<http://www.wikidata.org/entity/Q5516100> <http://www.wikidata.org/prop/direct/P577> "2013-05-23T00:00:00Z".
+<http://www.wikidata.org/entity/Q5516100> <http://www.wikidata.org/prop/direct/P577> "2013-05-22T00:00:00Z".
+<http://www.wikidata.org/entity/Q5516100> <http://www.wikidata.org/prop/direct/P577> "2013-07-26T00:00:00Z".
+<http://www.wikidata.org/entity/Q5516100> <http://www.wikidata.org/prop/direct/P136> <http://www.wikidata.org/entity/Q496523>.
+<http://www.wikidata.org/entity/Q496523> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q201658>.
+<http://www.wikidata.org/entity/Q2484376> <http://www.w3.org/2000/01/rdf-schema#label> "thriller film".
+<http://www.wikidata.org/entity/Q5516100> <http://www.wikidata.org/prop/direct/P136> <http://www.wikidata.org/entity/Q2484376>.
+<http://www.wikidata.org/entity/Q2484376> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q201658>.
+<http://www.wikidata.org/entity/Q255342> <http://www.w3.org/2000/01/rdf-schema#label> "Rush Hour".
+<http://www.wikidata.org/entity/Q255342> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q11424>.
+<http://www.wikidata.org/entity/Q255342> <http://www.wikidata.org/prop/direct/P2142> 245253686.
+<http://www.wikidata.org/entity/Q255342> <http://www.wikidata.org/prop/P2142> <http://www.wikidata.org/entity/statement/Q255342-6FCC1272-FB02-4158-985C-E0480D5331C5>.
+<http://www.wikidata.org/entity/statement/Q255342-6FCC1272-FB02-4158-985C-E0480D5331C5> <http://www.wikidata.org/prop/statement/value/P2142> <http://www.wikidata.org/value/88b6159501890091583bfc9788c53d74>.
+<http://www.wikidata.org/value/88b6159501890091583bfc9788c53d74> <http://wikiba.se/ontology#quantityAmount> 244400000.
+<http://www.wikidata.org/value/88b6159501890091583bfc9788c53d74> <http://wikiba.se/ontology#quantityUnit> <http://www.wikidata.org/entity/Q4917>.
+<http://www.wikidata.org/entity/statement/Q255342-6FCC1272-FB02-4158-985C-E0480D5331C5> <http://www.wikidata.org/prop/qualifier/P3005> <http://www.wikidata.org/entity/Q13780930>.
+<http://www.wikidata.org/entity/Q255342> <http://www.wikidata.org/prop/direct/boxOffice> 244400000.
+<http://www.wikidata.org/entity/Q255342> <http://www.wikidata.org/prop/direct/P136> <http://www.wikidata.org/entity/Q188473>.
+<http://www.wikidata.org/entity/Q255342> <http://www.wikidata.org/prop/direct/P57> <http://www.wikidata.org/entity/Q319204>.
+<http://www.wikidata.org/entity/Q319204> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q5>.
+<http://www.wikidata.org/entity/Q30> <http://www.w3.org/2000/01/rdf-schema#label> "United States".
+<http://www.wikidata.org/entity/Q319204> <http://www.wikidata.org/prop/direct/P21> <http://www.wikidata.org/entity/Q6581097>.
+<http://www.wikidata.org/entity/Q255342> <http://www.wikidata.org/prop/direct/P495> <http://www.wikidata.org/entity/Q30>.
+<http://www.wikidata.org/entity/Q30> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q6256>.
+<http://www.wikidata.org/entity/Q319204> <http://www.w3.org/2000/01/rdf-schema#label> "Brett Ratner".
+<http://www.wikidata.org/entity/Q30> <http://www.wikidata.org/prop/direct/P30> <http://www.wikidata.org/entity/Q49>.
+<http://www.wikidata.org/entity/Q49> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q5107>.
+<http://www.wikidata.org/entity/Q41148> <http://www.w3.org/2000/01/rdf-schema#label> "Martin Scorsese".
+<http://www.wikidata.org/entity/Q255342> <http://www.wikidata.org/prop/direct/P577> "1998-09-18T00:00:00Z".
+<http://www.wikidata.org/entity/Q255342> <http://www.wikidata.org/prop/direct/P577> "1999-03-25T00:00:00Z".
+<http://www.wikidata.org/entity/Q255342> <http://www.wikidata.org/prop/direct/P577> "1999-01-27T00:00:00Z".
+<http://www.wikidata.org/entity/Q48> <http://www.w3.org/2000/01/rdf-schema#label> "Asia".
+<http://www.wikidata.org/entity/Q255342> <http://www.wikidata.org/prop/P2142> <http://www.wikidata.org/entity/statement/Q255342-c46bd733-42b9-3976-4144-18e2927baf45>.
+<http://www.wikidata.org/entity/statement/Q255342-c46bd733-42b9-3976-4144-18e2927baf45> <http://www.wikidata.org/prop/statement/value/P2142> <http://www.wikidata.org/value/6eb5c42ed70b7511ea380922b871686e>.
+<http://www.wikidata.org/value/6eb5c42ed70b7511ea380922b871686e> <http://wikiba.se/ontology#quantityAmount> 245253686.
+<http://www.wikidata.org/value/6eb5c42ed70b7511ea380922b871686e> <http://wikiba.se/ontology#quantityUnit> <http://www.wikidata.org/entity/Q4917>.
+<http://www.wikidata.org/entity/statement/Q255342-c46bd733-42b9-3976-4144-18e2927baf45> <http://www.wikidata.org/prop/qualifier/P3005> <http://www.wikidata.org/entity/Q13780930>.
+<http://www.wikidata.org/entity/Q255342> <http://www.wikidata.org/prop/direct/boxOffice> 245253686.
+<http://www.wikidata.org/entity/Q255342> <http://www.wikidata.org/prop/direct/P2142> 244400000.
+<http://www.wikidata.org/entity/Q255342> <http://www.wikidata.org/prop/direct/P136> <http://www.wikidata.org/entity/Q1033891>.
+<http://www.wikidata.org/entity/Q1033891> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q201658>.
+<http://www.wikidata.org/entity/Q49> <http://www.w3.org/2000/01/rdf-schema#label> "North America".
+<http://www.wikidata.org/entity/Q255342> <http://www.wikidata.org/prop/direct/P136> <http://www.wikidata.org/entity/Q4984974>.
+<http://www.wikidata.org/entity/Q4984974> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q201658>.
+<http://www.wikidata.org/entity/Q496523> <http://www.w3.org/2000/01/rdf-schema#label> "Heist film".
+<http://www.wikidata.org/entity/Q4984974> <http://www.w3.org/2000/01/rdf-schema#label> "buddy cop film".
+<http://www.wikidata.org/entity/Q1392744> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q11424>.
+<http://www.wikidata.org/entity/Q1392744> <http://www.wikidata.org/prop/direct/P2142> 392000000.
+<http://www.wikidata.org/entity/Q1392744> <http://www.wikidata.org/prop/direct/P1411> <http://www.wikidata.org/entity/Q106291>.
+<http://www.wikidata.org/entity/Q1392744> <http://www.wikidata.org/prop/direct/P136> <http://www.wikidata.org/entity/Q959790>.
+<http://www.wikidata.org/entity/Q959790> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q201658>.
+<http://www.wikidata.org/entity/Q52207310> <http://www.w3.org/2000/01/rdf-schema#label> "film based on books".
+<http://www.wikidata.org/entity/Q1392744> <http://www.wikidata.org/prop/direct/P57> <http://www.wikidata.org/entity/Q41148>.
+<http://www.wikidata.org/entity/Q41148> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q5>.
+<http://www.wikidata.org/entity/Q538> <http://www.w3.org/2000/01/rdf-schema#label> "Oceania".
+<http://www.wikidata.org/entity/Q41148> <http://www.wikidata.org/prop/direct/P21> <http://www.wikidata.org/entity/Q6581097>.
+<http://www.wikidata.org/entity/Q1392744> <http://www.wikidata.org/prop/direct/P495> <http://www.wikidata.org/entity/Q30>.
+<http://www.wikidata.org/entity/Q1392744> <http://www.wikidata.org/prop/direct/P577> "2013-12-17T00:00:00Z".
+<http://www.wikidata.org/entity/Q1392744> <http://www.wikidata.org/prop/direct/P577> "2013-12-26T00:00:00Z".
+<http://www.wikidata.org/entity/Q1392744> <http://www.wikidata.org/prop/direct/P577> "2014-01-16T00:00:00Z".
+<http://www.wikidata.org/entity/Q1392744> <http://www.wikidata.org/prop/direct/P1411> <http://www.wikidata.org/entity/Q103916>.
+<http://www.wikidata.org/entity/Q1392744> <http://www.wikidata.org/prop/direct/P1411> <http://www.wikidata.org/entity/Q103360>.
+<http://www.wikidata.org/entity/Q1392744> <http://www.wikidata.org/prop/direct/P136> <http://www.wikidata.org/entity/Q645928>.
+<http://www.wikidata.org/entity/Q645928> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q201658>.
+<http://www.wikidata.org/entity/Q1392744> <http://www.wikidata.org/prop/direct/P1411> <http://www.wikidata.org/entity/Q102427>.
+<http://www.wikidata.org/entity/Q1392744> <http://www.wikidata.org/prop/direct/P1411> <http://www.wikidata.org/entity/Q107258>.
+<http://www.wikidata.org/entity/Q1392744> <http://www.wikidata.org/prop/direct/P136> <http://www.wikidata.org/entity/Q130232>.
+<http://www.wikidata.org/entity/Q130232> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q201658>.
+<http://www.wikidata.org/entity/Q5516100> <http://www.w3.org/2000/01/rdf-schema#label> "Fast & Furious 6".
+<http://www.wikidata.org/entity/Q1392744> <http://www.wikidata.org/prop/direct/P136> <http://www.wikidata.org/entity/Q157443>.
+<http://www.wikidata.org/entity/Q157443> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q201658>.
+<http://www.wikidata.org/entity/Q551876> <http://www.w3.org/2000/01/rdf-schema#label> "Justin Lin".
+<http://www.wikidata.org/entity/Q1392744> <http://www.wikidata.org/prop/direct/P136> <http://www.wikidata.org/entity/Q52207310>.
+<http://www.wikidata.org/entity/Q52207310> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q201658>.
+<http://www.wikidata.org/entity/Q645928> <http://www.w3.org/2000/01/rdf-schema#label> "Biographical film".
+<http://www.wikidata.org/entity/Q5516100> <http://www.wikidata.org/prop/direct/P495> <http://www.wikidata.org/entity/Q30>.
+<http://www.wikidata.org/entity/Q30> <http://www.wikidata.org/prop/direct/P30> <http://www.wikidata.org/entity/Q538>.
+<http://www.wikidata.org/entity/Q538> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q5107>.
+<http://www.wikidata.org/entity/Q6581097> <http://www.w3.org/2000/01/rdf-schema#label> "male".
+<http://www.wikidata.org/entity/Q959790> <http://www.w3.org/2000/01/rdf-schema#label> "crime film".
+<http://www.wikidata.org/entity/Q148> <http://www.w3.org/2000/01/rdf-schema#label> "China".
+<http://www.wikidata.org/entity/Q255342> <http://www.wikidata.org/prop/direct/P495> <http://www.wikidata.org/entity/Q148>.
+<http://www.wikidata.org/entity/Q148> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q6256>.
+<http://www.wikidata.org/entity/Q148> <http://www.wikidata.org/prop/direct/P30> <http://www.wikidata.org/entity/Q48>.
