@@ -1,0 +1,39 @@
+PREFIX : <http://www.dke.jku.ac.at/swag/ag#> 
+PREFIX gn: <http://www.geonames.org/ontology#> 
+PREFIX pr: <http://www.dke.jku.ac.at/swag/pr#> 
+PREFIX qb: <http://purl.org/linked-data/cube#> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX smd: <http://www.dke.jku.ac.at/swag/smd#> 
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> 
+PREFIX xml: <http://www.w3.org/XML/1998/namespace> 
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+PREFIX qb4o: <http://purl.org/qb4olap/cubes#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX vann: <http://purl.org/vocab/vann/> 
+PREFIX voaf: <http://purl.org/vocommons/voaf#> 
+PREFIX dcterms: <http://purl.org/dc/terms/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX schema: <http://www.fing.edu.uy/inco/cubes/schemas/migr_asyapp#> 
+prefix sdmx-measure:   <http://purl.org/linked-data/sdmx/2009/measure#>
+prefix property:       <http://eurostat.linked-statistics.org/property#>
+prefix sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+prefix geo:            <http://eurostat.linked-statistics.org/dic/geo#>
+
+SELECT (SUM(xsd:integer(?numOfApps)) as ?aggSumOfNumOfApplicatoins)
+ ?de_geo ?ti_year
+ WHERE {
+ #?migrAsylumApps qb:dataSet schema:migrAsylumApps_ds .
+ ?migrAsylumApps rdf:type qb:Observation .
+ ?migrAsylumApps sdmx-measure:obsValue ?numOfApps .
+ ?migrAsylumApps property:geo ?de_geo .
+ ?de_geo qb4o:memberOf property:geo .
+ ?migrAsylumApps sdmx-dimension:refPeriod ?ti_refPeriod .
+ ?ti_refPeriod qb4o:memberOf sdmx-dimension:refPeriod .
+ ?ti_refPeriod schema:inYear ?ti_year .
+ ?ti_year qb4o:memberOf schema:year .
+ ?ti_year schema:yearNum ?ti_ye_yearNum .
+ FILTER(?de_geo = geo:DE)
+ FILTER(?ti_ye_yearNum > 2010)
+ }
+ GROUP BY ?de_geo ?ti_year
