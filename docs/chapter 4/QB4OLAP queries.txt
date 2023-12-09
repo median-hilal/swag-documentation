@@ -1,0 +1,143 @@
+# Get Measures
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX qb4o: <http://purl.org/qb4olap/cubes#>
+select distinct ?m  where { 
+     ?c qb:component [qb:measure ?m].  
+    ?m a qb:MeasureProperty.
+} 
+#================================
+# get dimensions 
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX qb4o: <http://purl.org/qb4olap/cubes#>
+select distinct ?i  where {
+ 
+    ?i a qb:DimensionProperty.
+    {{?i qb4o:hasHierarchy ?h.} union {?h qb4o:inDimension ?i}}
+   ?h a qb4o:Hierarchy.
+    ?h qb4o:hasLevel ?l.
+   ?l a qb4o:LevelProperty.
+    ?c qb:component [qb4o:level ?l].    
+}
+#=================================
+# Get hierarchies
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX qb4o: <http://purl.org/qb4olap/cubes#>
+select distinct ?h  where {
+ ?h a qb4o:Hierarchy.
+    {{?i qb4o:hasHierarchy ?h} union {?h qb4o:inDimension ?i}}
+}
+#==============================
+# Get levels
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX qb4o: <http://purl.org/qb4olap/cubes#>
+select distinct ?l  where { 
+    ?l a qb4o:LevelProperty.
+    ?h qb4o:hasLevel ?l.
+}
+#=============================
+# Get level attributes
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX qb4o: <http://purl.org/qb4olap/cubes#>
+select distinct ?a  where {    
+    ?a a qb4o:LevelAttribute.
+    {{?l  qb4o:hasAttribute ?a.} union {?a qb4o:inLevel ?l.}}    
+}
+#=============================
+# Get level and their attributes
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX qb4o: <http://purl.org/qb4olap/cubes#>
+select distinct ?l ?a  where {        
+    {?l qb4o:hasAttribute ?a.} union {?a qb4o:inLevel ?l}
+}
+#=================================
+#Roll ups
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX qb4o: <http://purl.org/qb4olap/cubes#>
+select distinct ?h ?l1 ?l2  where {        
+    ?h a qb4o:Hierarchy.
+    ?s qb4o:inHierarchy ?h.
+    ?s a qb4o:HierarchyStep.
+    ?s qb4o:childLevel ?l1.
+    ?s qb4o:parentLevel ?l2.
+}
+#================================
+#hierarchy-level
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX qb4o: <http://purl.org/qb4olap/cubes#>
+select distinct ?h ?l  where {        
+    ?h qb4o:hasLevel ?l.
+}
+#================================
+#dimension-hierarchy
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX qb4o: <http://purl.org/qb4olap/cubes#>
+select distinct ?i ?h where {        
+    {?i qb4o:hasHierarchy ?h.}
+    union {?h qb4o:inDimension ?i.}
+}
+
+#=================================
+#================================
+# Level members
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX qb4o: <http://purl.org/qb4olap/cubes#>
+select distinct ?l ?i  where {        
+  ?i qb4o:memberOf ?l.
+}
+#==============================
+# Level to Attribute
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX qb4o: <http://purl.org/qb4olap/cubes#>
+select distinct ?i1 ?x ?i2 where {        
+  ?i1 qb4o:memberOf ?l.
+  ?i1 ?x ?i2.
+  ?x a qb4o:LevelAttribute.
+  ?l qb4o:hasAttribute ?x.
+}
+#==============================
+# Observations 
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX qb4o: <http://purl.org/qb4olap/cubes#>
+select distinct ?ds ?i  where {        
+  ?i a qb:Observation.
+    ?i qb:dataSet ?ds.
+}
+#================================
+#Fact to level
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX qb4o: <http://purl.org/qb4olap/cubes#>
+careful ?l a qb4o:LevelProperty.
+select distinct ?i1 ?l ?i2  where {        
+  ?i1 a qb:Observation.
+    ?i1 qb:dataSet ?ds.
+    ?i1 ?l ?i2.
+    ?i2 qb4o:memberOf ?l.
+    #?l a qb4o:LevelProperty.
+}
+#================================
+#Fact to Measure
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX qb4o: <http://purl.org/qb4olap/cubes#>
+careful ?m a qb:MeasureProperty.
+select distinct ?i1 ?m ?i2 ?w where {        
+  ?i1 a qb:Observation.
+    ?i1 qb:dataSet ?ds.
+    ?i1 ?m ?i2.
+    #?m a qb:MeasureProperty.
+}
+#=================================================
+# Roll ups
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX qb4o: <http://purl.org/qb4olap/cubes#>
+select distinct ?i1 ?i2 where {        
+	?i1 qb4o:memberOf ?l1.
+    ?i2 qb4o:memberOf ?l2.
+    ?s a qb4o:HierarchyStep.
+    ?c a qb4o:LevelProperty.
+    ?p a qb4o:LevelProperty.
+    ?s qb4o:inHierarchy ?h.
+    ?s qb4o:childLevel ?c.
+    ?s qb4o:parentLevel ?p.
+    ?s qb4o:rollup ?prop.
+    ?prop a qb4o:RollupProperty.
+    ?i1 ?prop ?i2.

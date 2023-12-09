@@ -51,5 +51,12 @@ In order to solve the tasks, participants had to obtain answers for an MD analys
 
 Results from the [data](usability/data.csv) demonstrate that SWAG can be employed to construct intuitive user interfaces for guided MD analysis over LOD.
 
+
+# Chapter 4
+[SPARQL queries to retrieve the MD elements and instances of the Asylum Applications Enriched MD model from the RDF representation] (chapter 4/QB4OLAP queries.txt)
+[MD Schema for Asylum Applications] (https://github.com/lorenae/qb4olap/blob/master/examples/eurostat_schema_QB4OLAP_v1.3.ttl)
+[Dimension Instances for Asylum Applications] (https://github.com/lorenae/qb4olap/blob/master/examples/eurostat_instances_QB4OLAP_v1.3.ttl)
+[Observations] ()
+
 # Chapter 9: Superimposed MD Schema
 [Data set ](chapter 9/dataset.ttl) 
