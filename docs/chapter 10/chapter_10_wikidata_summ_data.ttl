@@ -1,0 +1,138 @@
+@base <http://example/base/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+<http://www.wikidata.org/entity/Q201658> rdfs:label "film genre";
+										 a rdfs:class.
+
+										 
+<http://www.wikidata.org/entity/Q11424> rdfs:label "Film";
+										 a rdfs:class.
+
+
+<http://www.wikidata.org/prop/direct/P31> rdfs:label "instance of";
+										 a owl:ObjectProperty, rdf:Property.
+										 
+<http://www.wikidata.org/prop/direct/P136> rdfs:label "genre";
+										 a owl:ObjectProperty, rdf:Property.
+
+
+<http://www.wikidata.org/entity/Q277080> <http://www.wikidata.org/prop/direct/P136> <http://www.wikidata.org/entity/Q188473>;
+										  rdfs:label "Taken" .
+
+
+<http://www.wikidata.org/entity/Q5516100> rdfs:label "Fast & Furious 6";
+  <http://www.wikidata.org/prop/direct/P136> <http://www.wikidata.org/entity/Q188473>,
+    <http://www.wikidata.org/entity/Q2484376>, <http://www.wikidata.org/entity/Q496523>;
+  <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q11424>;
+  <http://www.wikidata.org/prop/direct/boxOffice> "788679850";
+  <http://www.wikidata.org/prop/direct/P577> "2013-05-22T00:00:00Z" .
+
+<http://www.wikidata.org/entity/Q188473> rdfs:label "Action film";
+  <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q201658> .
+  
+<http://www.wikidata.org/entity/Q2484376> rdfs:label "thriller film";
+  <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q201658> .
+
+<http://www.wikidata.org/entity/Q496523> rdfs:label "Heist film";
+  <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q201658> .
+
+<http://www.wikidata.org/entity/Q130232> rdfs:label "drama film";
+  <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q201658> .
+
+<http://www.wikidata.org/entity/Q959790> rdfs:label "crime film";
+  <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q201658> .
+
+
+<http://www.wikidata.org/entity/Q255342> rdfs:label "Rush Hour";
+  <http://www.wikidata.org/prop/direct/P136> <http://www.wikidata.org/entity/Q188473>,
+    <http://www.wikidata.org/entity/Q1033891>;
+  <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q11424>;
+  <http://www.wikidata.org/prop/direct/boxOffice> "244400000", "245253686";
+  <http://www.wikidata.org/prop/direct/P577> "1998-09-18T00:00:00Z" .
+
+<http://www.wikidata.org/entity/Q1033891> rdfs:label "martial arts film";
+  <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q201658> .
+
+
+<http://www.wikidata.org/entity/Q1392744> rdfs:label "The Wolf of Wall Street";
+  <http://www.wikidata.org/prop/direct/P136> <http://www.wikidata.org/entity/Q130232>,
+    <http://www.wikidata.org/entity/Q959790>, <http://www.wikidata.org/entity/Q157443>,
+    <http://www.wikidata.org/entity/Q52162262>, <http://www.wikidata.org/entity/Q645928>;
+  <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q11424>;
+  <http://www.wikidata.org/prop/direct/P577> "2013-12-17T00:00:00Z";
+  <http://www.wikidata.org/prop/direct/boxOffice>  "392".
+
+<http://www.wikidata.org/entity/Q157443> rdfs:label "Comedy film";
+  <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q201658> .
+
+<http://www.wikidata.org/entity/Q52162262> rdfs:label "film based on literature";
+  <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q201658> .
+
+<http://www.wikidata.org/entity/Q645928> rdfs:label "Biographical film";
+  <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q201658> .
+
+
+
+#Measure values 
+
+<http://www.wikidata.org/entity/Q1392744> <http://www.wikidata.org/prop/direct/P2142> 392.
+
+<http://www.wikidata.org/entity/Q255342> <http://www.wikidata.org/prop/direct/P31>
+    <http://www.wikidata.org/entity/Q11424>;
+  <http://www.wikidata.org/prop/direct/P2142> 245, 244;
+  <http://www.wikidata.org/prop/P2142> <http://www.wikidata.org/entity/statement/Q255342-6FCC1272-FB02-4158-985C-E0480D5331C5>,
+    <http://www.wikidata.org/entity/statement/Q255342-c46bd733-42b9-3976-4144-18e2927baf45> .
+
+<http://www.wikidata.org/entity/statement/Q255342-6FCC1272-FB02-4158-985C-E0480D5331C5>
+  <http://www.wikidata.org/prop/statement/value/P2142> <http://www.wikidata.org/value/88b6159501890091583bfc9788c53d74>;
+  <http://www.wikidata.org/prop/qualifier/P3005> <http://www.wikidata.org/entity/Q13780930> .
+
+<http://www.wikidata.org/value/88b6159501890091583bfc9788c53d74> <http://wikiba.se/ontology#quantityAmount>
+    244;
+  <http://wikiba.se/ontology#quantityUnit> <http://www.wikidata.org/entity/Q4917> .
+
+<http://www.wikidata.org/entity/Q277080> <http://www.wikidata.org/prop/direct/P31>
+    <http://www.wikidata.org/entity/Q11424>;
+  <http://www.wikidata.org/prop/direct/P2142> 227, 145;
+  <http://www.wikidata.org/prop/P2142> <http://www.wikidata.org/entity/statement/Q277080-9452C942-0092-4050-A0C2-ADCD7DC64F6D> .
+
+<http://www.wikidata.org/entity/statement/Q277080-9452C942-0092-4050-A0C2-ADCD7DC64F6D>
+  <http://www.wikidata.org/prop/statement/value/P2142> <http://www.wikidata.org/value/8c7c231558cb3993f938813c69532eae>;
+  <http://www.wikidata.org/prop/qualifier/P3005> <http://www.wikidata.org/entity/Q13780930> .
+
+<http://www.wikidata.org/value/8c7c231558cb3993f938813c69532eae> <http://wikiba.se/ontology#quantityAmount>
+    227;
+  <http://wikiba.se/ontology#quantityUnit> <http://www.wikidata.org/entity/Q4917> .
+
+<http://www.wikidata.org/entity/statement/Q255342-c46bd733-42b9-3976-4144-18e2927baf45>
+  <http://www.wikidata.org/prop/statement/value/P2142> <http://www.wikidata.org/value/6eb5c42ed70b7511ea380922b871686e>;
+  <http://www.wikidata.org/prop/qualifier/P3005> <http://www.wikidata.org/entity/Q13780930> .
+
+<http://www.wikidata.org/value/6eb5c42ed70b7511ea380922b871686e> <http://wikiba.se/ontology#quantityAmount>
+    245;
+  <http://wikiba.se/ontology#quantityUnit> <http://www.wikidata.org/entity/Q4917> .
+
+<http://www.wikidata.org/entity/Q5516100> <http://www.wikidata.org/prop/direct/P31>
+    <http://www.wikidata.org/entity/Q11424>;
+  <http://www.wikidata.org/prop/direct/P2142> 789;
+  <http://www.wikidata.org/prop/P2142> <http://www.wikidata.org/entity/statement/Q5516100-09CBAE8F-E71F-4556-9425-44B3A5DBD429> .
+
+<http://www.wikidata.org/entity/statement/Q5516100-09CBAE8F-E71F-4556-9425-44B3A5DBD429>
+  <http://www.wikidata.org/prop/statement/value/P2142> <http://www.wikidata.org/value/9c06d4ca7bfc62460652f919ee49cdfa>;
+  <http://www.wikidata.org/prop/qualifier/P3005> <http://www.wikidata.org/entity/Q13780930> .
+
+<http://www.wikidata.org/value/9c06d4ca7bfc62460652f919ee49cdfa> <http://wikiba.se/ontology#quantityAmount>
+    789;
+  <http://wikiba.se/ontology#quantityUnit> <http://www.wikidata.org/entity/Q4917> .

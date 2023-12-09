@@ -14,7 +14,7 @@
 <http://www.wikidata.org/entity/Q551876> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q5>.
 <http://www.wikidata.org/entity/Q1392744> <http://www.w3.org/2000/01/rdf-schema#label> "The Wolf of Wall Street".
 <http://www.wikidata.org/entity/Q551876> <http://www.wikidata.org/prop/direct/P21> <http://www.wikidata.org/entity/Q6581097>.
-<http://www.wikidata.org/entity/Q6581097> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q48277>.
+<http://www.wikidata.org/entity/Q6581097> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q48264>.
 <http://www.wikidata.org/entity/Q157443> <http://www.w3.org/2000/01/rdf-schema#label> "comedy film".
 <http://www.wikidata.org/entity/Q5516100> <http://www.wikidata.org/prop/direct/P495> <http://www.wikidata.org/entity/Q17>.
 <http://www.wikidata.org/entity/Q17> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q6256>.
@@ -65,16 +65,13 @@
 <http://www.wikidata.org/entity/Q255342> <http://www.wikidata.org/prop/direct/P136> <http://www.wikidata.org/entity/Q1033891>.
 <http://www.wikidata.org/entity/Q1033891> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q201658>.
 <http://www.wikidata.org/entity/Q49> <http://www.w3.org/2000/01/rdf-schema#label> "North America".
-<http://www.wikidata.org/entity/Q255342> <http://www.wikidata.org/prop/direct/P136> <http://www.wikidata.org/entity/Q4984974>.
-<http://www.wikidata.org/entity/Q4984974> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q201658>.
 <http://www.wikidata.org/entity/Q496523> <http://www.w3.org/2000/01/rdf-schema#label> "Heist film".
-<http://www.wikidata.org/entity/Q4984974> <http://www.w3.org/2000/01/rdf-schema#label> "buddy cop film".
 <http://www.wikidata.org/entity/Q1392744> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q11424>.
 <http://www.wikidata.org/entity/Q1392744> <http://www.wikidata.org/prop/direct/P2142> 392000000.
 <http://www.wikidata.org/entity/Q1392744> <http://www.wikidata.org/prop/direct/P1411> <http://www.wikidata.org/entity/Q106291>.
 <http://www.wikidata.org/entity/Q1392744> <http://www.wikidata.org/prop/direct/P136> <http://www.wikidata.org/entity/Q959790>.
 <http://www.wikidata.org/entity/Q959790> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q201658>.
-<http://www.wikidata.org/entity/Q52207310> <http://www.w3.org/2000/01/rdf-schema#label> "film based on books".
+<http://www.wikidata.org/entity/Q52207310> <http://www.w3.org/2000/01/rdf-schema#label> "film based on literature".
 <http://www.wikidata.org/entity/Q1392744> <http://www.wikidata.org/prop/direct/P57> <http://www.wikidata.org/entity/Q41148>.
 <http://www.wikidata.org/entity/Q41148> <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q5>.
 <http://www.wikidata.org/entity/Q538> <http://www.w3.org/2000/01/rdf-schema#label> "Oceania".

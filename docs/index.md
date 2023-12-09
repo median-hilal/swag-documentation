@@ -64,6 +64,12 @@ Results from the [data](usability/data.csv) demonstrate that SWAG can be employe
 * [Dimension Instances for Asylum Applications - QB4OLAP](https://github.com/lorenae/qb4olap/blob/master/examples/eurostat_instances_QB4OLAP_v1.3.ttl)
 * [Observations](chapter 5/observations.ttl)
 
+# Chapter 7: Semantic Web Analysis Graphs
+* [Semantics Preservation of Operation Type AddResultFilter](chapter 7/semantics_addResultFilter.pdf)
+* [Semantics Preservation of Other Operation Types](chapter 7/semantics_other_operations.pdf)
+* [Semantics Preservation of Sets of Operation Types](chapter 7/semantics_set_of_operations.pdf)
+
+
 
 # Chapter 9: Superimposed MD Schema
 [Data set ](chapter 9/dataset.ttl) 

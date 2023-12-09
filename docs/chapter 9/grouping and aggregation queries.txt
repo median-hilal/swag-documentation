@@ -1,0 +1,240 @@
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX cc: <http://creativecommons.org/ns#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX ontolex: <http://www.w3.org/ns/lemon/ontolex#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
+PREFIX pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/>
+PREFIX pqv: <http://www.wikidata.org/prop/qualifier/value/>
+PREFIX pr: <http://www.wikidata.org/prop/reference/>
+PREFIX prn: <http://www.wikidata.org/prop/reference/value-normalized/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX prv: <http://www.wikidata.org/prop/reference/value/>
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
+PREFIX psn: <http://www.wikidata.org/prop/statement/value-normalized/>
+PREFIX psv: <http://www.wikidata.org/prop/statement/value/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <http://schema.org/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdata: <http://www.wikidata.org/wiki/Special:EntityData/>
+PREFIX wdno: <http://www.wikidata.org/prop/novalue/>
+PREFIX wdref: <http://www.wikidata.org/reference/>
+PREFIX wds: <http://www.wikidata.org/entity/statement/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wdtn: <http://www.wikidata.org/prop/direct-normalized/>
+PREFIX wdv: <http://www.wikidata.org/value/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+================================================
+#The SPARQL query of the MD path which connects :film and :continent
+
+select ?filmLabel ?continentLabel{
+?film rdfs:label ?filmLabel.
+?continent rdfs:label ?continentLabel.
+    {    
+SELECT DISTINCT ?film ?continent WHERE {
+ {SELECT ?film WHERE {?film wdt:P31 wd:Q11424. ?film wdt:P2142 ?boxOffice1}}
+ {SELECT ?film ?country WHERE {?film wdt:P495 ?country}}
+ {SELECT ?country WHERE {?country wdt:P31 wd:Q6256}}
+ {SELECT ?country ?continent WHERE {?country wdt:P30 ?continent}}
+ {SELECT ?continent WHERE {?continent wdt:P31 wd:Q5107}}
+        }}}
+
+===============================================
+# query for The base set of grouping of the group-by list (:director, :country)
+
+select ?filmLabel ?directorLabel ?countryLabel{
+?film rdfs:label ?filmLabel.
+?director rdfs:label ?directorLabel.
+?country rdfs:label ?countryLabel.
+{
+SELECT DISTINCT ?film ?director ?country
+ WHERE{
+ {SELECT ?film ?country
+ WHERE {
+ {SELECT ?film WHERE {?film wdt:P31 wd:Q11424. ?film wdt:P2142 ?boxOffice1}}
+ {SELECT ?film ?country WHERE {?film wdt:P495 ?country}}
+ {SELECT ?country WHERE {?country wdt:P31 wd:Q6256}}
+ }
+ }
+ {SELECT ?film ?director
+ WHERE {
+ {SELECT ?film WHERE {?film wdt:P31 wd:Q11424. ?film wdt:P2142 ?boxOffice1}}
+ {SELECT ?film ?director WHERE {?film wdt:P57 ?director}}
+ {SELECT ?director WHERE {?director wdt:P31 wd:Q5}}
+        } }}
+}
+}
+
+
+================================================
+# The SPARQL query of the base set of grouping of the group-by list (:director, :continent)
+
+select ?filmLabel ?directorLabel ?continentLabel{
+?film rdfs:label ?filmLabel.
+?director rdfs:label ?directorLabel.
+?continent rdfs:label ?continentLabel.
+{
+SELECT DISTINCT ?film ?director ?continent
+ WHERE{
+ {SELECT ?film ?continent
+ WHERE {
+ {SELECT ?film WHERE {?film wdt:P31 wd:Q11424. ?film wdt:P2142 ?boxOffice1}}
+ {SELECT ?film ?country WHERE {?film wdt:P495 ?country}}
+ {SELECT ?country WHERE {?country wdt:P31 wd:Q6256}}
+ {SELECT ?country ?continent WHERE {?country wdt:P30 ?continent}}
+ {SELECT ?continent WHERE {?continent wdt:P31 wd:Q5107}}
+ }
+ }
+ {SELECT ?film ?director
+ WHERE {
+ {SELECT ?film WHERE {?film wdt:P31 wd:Q11424. ?film wdt:P2142 ?boxOffice1}}
+ {SELECT ?film ?director WHERE {?film wdt:P57 ?director}}
+ {SELECT ?director WHERE {?director wdt:P31 wd:Q5}}
+        } }}
+}
+}
+
+==============================================
+# The SPARQL query of the base set of measure for the measure :boxOffice
+SELECT DISTINCT ?filmLabel ?boxOffice
+ WHERE{
+ ?film rdfs:label ?filmLabel.
+ {SELECT ?film WHERE {?film wdt:P31 wd:Q11424. ?film wdt:P2142 ?boxOffice1}}
+ {SELECT ?film ?boxOffice WHERE {
+ ?film p:P2142 ?boxOfficeNode.
+ ?boxOfficeNode psv:P2142 ?value.
+ ?value wikibase:quantityAmount ?boxOffice.
+ ?value wikibase:quantityUnit wd:Q4917.
+ ?boxOfficeNode pq:P3005 wd:Q13780930.}
+ }
+ }
+
+===================================================
+# The SPARQL pattern of the base set of aggregation of the group-by list (:director, :continent) and the measure :boxOffice
+SELECT ?filmLabel ?continentLabel ?directorLabel ?boxOffice
+ WHERE{
+?film rdfs:label ?filmLabel.
+?continent rdfs:label ?continentLabel.
+?director rdfs:label ?directorLabel.
+ {SELECT DISTINCT ?film ?boxOffice
+ WHERE{
+ {SELECT ?film WHERE {?film wdt:P31 wd:Q11424. ?film wdt:P2142 ?boxOffice1}}
+ {SELECT ?film ?boxOffice WHERE {
+ ?film p:P2142 ?boxOfficeNode.
+ ?boxOfficeNode psv:P2142 ?value.
+?value wikibase:quantityAmount ?boxOffice.
+ ?value wikibase:quantityUnit wd:Q4917.
+ ?boxOfficeNode pq:P3005 wd:Q13780930.}
+ }
+ }
+ }
+ {SELECT DISTINCT ?film ?continent ?director
+ WHERE{
+ {SELECT ?film ?continent
+ WHERE {
+ {SELECT ?film WHERE {?film wdt:P31 wd:Q11424. ?film wdt:P2142 ?boxOffice1}}
+ {SELECT ?film ?country WHERE {?film wdt:P495 ?country}}
+ {SELECT ?country WHERE {?country wdt:P31 wd:Q6256}}
+ {SELECT ?country ?continent WHERE {?country wdt:P30 ?continent}}
+ {SELECT ?continent WHERE {?continent wdt:P31 wd:Q5107}}
+ }
+ }
+ {SELECT ?film ?director
+ WHERE {
+ {SELECT ?film WHERE {?film wdt:P31 wd:Q11424. ?film wdt:P2142 ?boxOffice1}}
+ {SELECT ?film ?director WHERE {?film wdt:P57 ?director}}
+ {SELECT ?director WHERE {?director wdt:P31 wd:Q5}}
+ }
+ }
+ }
+    }}
+ 
+=======================================
+# Query for The base set of aggregation for the measure :boxOffice and the group-by list (:director, :country)
+SELECT ?filmLabel ?countryLabel ?directorLabel ?boxOffice
+ WHERE{
+?film rdfs:label ?filmLabel.
+?country rdfs:label ?countryLabel.
+?director rdfs:label ?directorLabel.
+ {SELECT DISTINCT ?film ?boxOffice
+ WHERE{
+ {SELECT ?film WHERE {?film wdt:P31 wd:Q11424. ?film wdt:P2142 ?boxOffice1}}
+ {SELECT ?film ?boxOffice WHERE {
+ ?film p:P2142 ?boxOfficeNode.
+ ?boxOfficeNode psv:P2142 ?value.
+?value wikibase:quantityAmount ?boxOffice.
+ ?value wikibase:quantityUnit wd:Q4917.
+ ?boxOfficeNode pq:P3005 wd:Q13780930.}
+ }
+ }
+ }
+ {SELECT DISTINCT ?film ?country ?director
+ WHERE{
+ {SELECT ?film ?country
+ WHERE {
+ {SELECT ?film WHERE {?film wdt:P31 wd:Q11424. ?film wdt:P2142 ?boxOffice1}}
+ {SELECT ?film ?country WHERE {?film wdt:P495 ?country}}
+ {SELECT ?country WHERE {?country wdt:P31 wd:Q6256}} 
+ }
+ }
+ {SELECT ?film ?director
+ WHERE {
+ {SELECT ?film WHERE {?film wdt:P31 wd:Q11424. ?film wdt:P2142 ?boxOffice1}}
+ {SELECT ?film ?director WHERE {?film wdt:P57 ?director}}
+ {SELECT ?director WHERE {?director wdt:P31 wd:Q5}}
+ }
+ }
+ }
+    }}
+ 
+
+======================================
+# The final SPARQL Aggregation query of the group-by list (:director, :continent) and the measure :boxOffice
+
+SELECT ?continentLabel ?directorLabel ?sumBoxOffice
+ WHERE{
+?continent rdfs:label ?continentLabel.
+?director rdfs:label ?directorLabel.
+ {SELECT (SUM(?boxOffice) AS ?sumBoxOffice) ?continent ?director
+ WHERE{
+ {SELECT DISTINCT ?film ?boxOffice
+ WHERE{
+ {SELECT ?film WHERE {?film wdt:P31 wd:Q11424. ?film wdt:P2142 ?boxOffice1}}
+ {SELECT ?film ?boxOffice WHERE {
+ ?film p:P2142 ?boxOfficeNode.
+ ?boxOfficeNode psv:P2142 ?value.
+ ?value wikibase:quantityAmount ?boxOffice.
+ ?value wikibase:quantityUnit wd:Q4917.
+ ?boxOfficeNode pq:P3005 wd:Q13780930.}
+ }
+ }
+ }
+ {SELECT DISTINCT ?film ?continent ?director
+ WHERE{
+ {SELECT ?film ?continent
+ WHERE {
+ {SELECT ?film WHERE {?film wdt:P31 wd:Q11424. ?film wdt:P2142 ?boxOffice1}}
+ {SELECT ?film ?country WHERE {?film wdt:P495 ?country}}
+ {SELECT ?country WHERE {?country wdt:P31 wd:Q6256}}
+ {SELECT ?country ?continent WHERE {?country wdt:P30 ?continent}}
+ {SELECT ?continent WHERE {?continent wdt:P31 wd:Q5107}}
+ }
+ }
+ {SELECT ?film ?director
+ WHERE {
+ {SELECT ?film WHERE {?film wdt:P31 wd:Q11424. ?film wdt:P2142 ?boxOffice1}}
+ {SELECT ?film ?director WHERE {?film wdt:P57 ?director}}
+ {SELECT ?director WHERE {?director wdt:P31 wd:Q5}}
+ }
+ }
+ }
+ }
+ } GROUP BY ?continent ?director
+ }}
+ 

@@ -1,0 +1,19 @@
+#European young billionaires (based on a similar Wikidata query)
+
+#title: Distinct billionaires
+SELECT ?locationLabel ?item ?itemLabel (MAX(?billion) as ?billions) (max(?birthDate) as ?birth) (max(?citizen) as ?country)
+WHERE
+{
+  ?item wdt:P2218 ?worth.
+  ?item wdt:P569 ?birthDate .
+  filter(year(?birthDate) > 1990) #Young
+  ?item wdt:P27 ?citizen .
+  ?citizen wdt:P30 wd:Q46 . #Europe
+  ?item wdt:P19 ?location .
+  
+  FILTER(?worth>1000000000).
+  BIND(?worth/1000000000 AS ?billion).
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en,de". }
+}
+GROUP BY ?locationLabel ?item ?itemLabel
+ORDER BY DESC(?billions)

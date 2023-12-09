@@ -1,0 +1,318 @@
+Created: 31.05.2020
+Modeified: 31.05.2020
+----------------------------------------------------
+Tests to check whether the ideas of reporting are feasible.
+
+----------------------------------------------------
+# Measure Non-Strictness
+# apply intern aggregation
+# count actual facts per cell and facts resulting from trreating measures as fact per cell
+# Further calculation of grouping the aggregated measure in pure vs. non-pure per cell is not checked - 
+# but can be checked easily using the ?grp variable as used in dimension non-strictness
+
+
+SELECT 
+?date
+(SUM(?avgBoxOfficePerFilm) as ?sum)
+(SUM (?moreThanOneBoxOffice) as ?factsMoreThanOneBoxOffice)
+(SUM (?oneBoxOffice) as ?factsOneBoxOffice)
+(SUM (?lessThanOneBoxOffice) as ?factsLessThanOneBoxOffice)
+
+	WHERE{     
+      VALUES ?film {
+  			#taken
+			wd:Q277080
+                       #multi director - continent
+                       # Fast and Furious 6
+                       wd:Q5516100 
+                       # no box office
+                       # The Wolf of Wall Street
+                       wd:Q1392744 
+                       # multi box office
+                       # Rush Hour
+                       wd:Q255342
+          }
+      BIND (if(?countBoxOffice > 1, 1, 0) AS ?moreThanOneBoxOffice)
+      BIND (if(?countBoxOffice < 1, 1, 0) AS ?lessThanOneBoxOffice)
+      BIND (if(?countBoxOffice = 1, 1, 0) AS ?oneBoxOffice)
+	  {        
+	    SELECT ?film (AVG(?boxOffice) AS ?avgBoxOfficePerFilm) (count(distinct ?boxOffice) as ?countBoxOffice) 
+	    WHERE{
+	      {?film wdt:P31 wd:Q11424.          
+	      ?film wdt:P2142 ?boxOffice1.}
+	      {?film p:P2142  ?boxOfficeNode. 
+	      ?boxOfficeNode psv:P2142 ?value.
+	      ?value wikibase:quantityAmount ?boxOffice.
+	      ?value wikibase:quantityUnit  wd:Q4917.
+	      ?boxOfficeNode pq:P3005 wd:Q13780930.}
+	    }GROUP BY ?film
+	  }  
+	  {
+	    SELECT DISTINCT ?film ?date 
+	    WHERE{          
+	      {?film wdt:P31 wd:Q11424.          
+	      ?film wdt:P2142 ?boxOffice1.}
+	      {
+	        SELECT ?film  (MIN (?pubDate) AS ?date) 
+	        WHERE{
+	          ?film wdt:P31 wd:Q11424.
+	          ?film wdt:P2142 ?boxOffice2.
+	          ?film wdt:P577 ?pubDate. 
+	        }GROUP BY ?film 
+	      }
+		  {
+	        SELECT (MIN (?pubDate1) AS ?date) 
+	        WHERE{
+	          ?film1 wdt:P31 wd:Q11424.
+	          ?film1 wdt:P2142 ?boxOffice3.
+	          ?film1 wdt:P577 ?pubDate1. 
+	        }GROUP BY ?film1
+	      }
+	    }
+	  }         
+	}GROUP BY ?date
+----------------------------------------------------
+# Measure Non-Strictness
+# treat each measure as a separate fact
+# count actual facts per cell and facts resulting from trreating measures as fact per cell
+# Further calculation of the aggregated measure in actual vs. total per cell is not checked
+ 
+SELECT 
+?date
+(SUM(?boxOffice) as ?sum)
+(COUNT (distinct ?boxOffice) as ?measuresCount)
+(COUNT (distinct ?film) as ?factsCount)
+	WHERE{     
+      VALUES ?film {
+					   #taken
+						wd:Q277080
+                       #multi director - continent
+                       # Fast and Furious 6
+                       wd:Q5516100 
+                       # no box office
+                       # The Wolf of Wall Street
+                       wd:Q1392744 
+                       # multi box office
+                       # Rush Hour
+                       wd:Q255342
+          }
+	  {        
+	    SELECT distinct ?film ?boxOffice
+	    WHERE{
+	      {?film wdt:P31 wd:Q11424.          
+	      ?film wdt:P2142 ?boxOffice1.}
+	      {?film p:P2142  ?boxOfficeNode. 
+	      ?boxOfficeNode psv:P2142 ?value.
+	      ?value wikibase:quantityAmount ?boxOffice.
+	      ?value wikibase:quantityUnit  wd:Q4917.
+	      ?boxOfficeNode pq:P3005 wd:Q13780930.}
+	    }
+	  }  
+	  {
+	    SELECT DISTINCT ?film ?date 
+	    WHERE{          
+	      {?film wdt:P31 wd:Q11424.          
+	      ?film wdt:P2142 ?boxOffice1.}
+	      {
+	        SELECT ?film  (MIN (?pubDate) AS ?date) 
+	        WHERE{
+	          ?film wdt:P31 wd:Q11424.
+	          ?film wdt:P2142 ?boxOffice2.
+	          ?film wdt:P577 ?pubDate. 
+	        }GROUP BY ?film 
+	      }
+		  {
+	        SELECT (MIN (?pubDate1) AS ?date) 
+	        WHERE{
+	          ?film1 wdt:P31 wd:Q11424.
+	          ?film1 wdt:P2142 ?boxOffice3.
+	          ?film1 wdt:P577 ?pubDate1. 
+	        }GROUP BY ?film1
+	      }
+	    }
+	  }         
+	}GROUP BY ?date
+----------------------------------------------------
+# Dimension - Non-Strictness
+# Calculate per cell the number of facts with >1 level member and with <=1 level member
+# Aggregate measures in both of the two groups established above (Using the ?grp variable. This variable has to be removed in order to get totals)
+# Does this relate to how measures are treated? if non-strict measures are treted as facts, does this get affected?
+
+
+select 
+?genre
+#?grp
+(group_concat(?film; separator=",") as ?allFilms)
+(sum (?var) as ?sumVar) 
+(count (?film) as ?filmCnt)
+(sum (?cnt0) as ?CountFilmsWithOneOrLessGenrePerFilm) 
+(sum (?cnt1) as ?CountFilmsWithMoreThanOneGenrePerFilm)
+
+where{       
+              
+    VALUES ?film {
+						#taken
+						wd:Q277080
+                       #multi director - continent
+                       # Fast and Furious 6
+                       wd:Q5516100 
+                       # no box office
+                       # The Wolf of Wall Street
+                       wd:Q1392744 
+                       # multi box office
+                       # Rush Hour
+                       wd:Q255342
+          }  
+          
+	 ?film wdt:P136 ?genre. ?genre wdt:P31 wd:Q201658.
+  
+  BIND (if (?cntGenre <= 1, "One Or less", "More than one") AS ?grp)  
+  BIND (if (?cntGenre <= 1, 1, 0) AS ?cnt0)
+    BIND (if (?cntGenre > 1, 1, 0) AS ?cnt1)
+    {
+        select distinct ?film ?cntGenre ?var
+        {            
+            BIND (if (?cntGenre > 1, 0, 1) AS ?var)
+            {
+                select ?film (count (distinct ?genre) as ?cntGenre) 
+                where{
+                  ?film wdt:P136 ?genre. 
+                }group by ?film
+            }
+        }
+    }
+    {
+        select distinct ?film ?genre where{            
+             ?film wdt:P136 ?genre.
+        }
+    }
+                
+}
+group  by ?genre #?grp
+
+
+----------------------------------------------------------------------------------
+# Measure incompleteness
+# Count discarded facts per cube cell
+
+SELECT ?date (SUM(?boxOffice) as ?sum) 
+(group_concat(?boxOffice; separator=",") as ?concBxOffice)
+(sum(?boxOfficeValIsMissing) as ?numOfDiscardedFacts)
+WHERE{
+  VALUES ?film {
+                       #taken
+						wd:Q277080
+                       #multi director - continent
+                       # Fast and Furious 6
+                       wd:Q5516100 
+                       # no box office
+                       # The Wolf of Wall Street
+                       wd:Q1392744 
+                       # multi box office
+                       # Rush Hour
+                       wd:Q255342
+          }
+  {
+    BIND (if(coalesce(?boxOffice, -1) = -1, 1, 0) AS ?boxOfficeValIsMissing)
+    {
+      SELECT DISTINCT ?film ?boxOffice
+      WHERE{
+        {?film wdt:P31 wd:Q11424.          
+        ?film wdt:P2142 ?boxOffice1.}
+        OPTIONAL{?film p:P2142  ?boxOfficeNode. 
+        ?boxOfficeNode psv:P2142 ?value.
+        ?value wikibase:quantityAmount ?boxOffice.
+        ?value wikibase:quantityUnit  wd:Q4917.
+        ?boxOfficeNode pq:P3005 wd:Q13780930.}
+      }
+    }
+  }  
+  {
+    SELECT DISTINCT ?film ?date 
+    WHERE{          
+      {?film wdt:P31 wd:Q11424.          
+      ?film wdt:P2142 ?boxOffice1.}
+      {
+        SELECT ?film  (MIN (?pubDate) AS ?date) 
+        WHERE{
+          ?film wdt:P31 wd:Q11424.
+          ?film wdt:P2142 ?boxOffice2.
+          ?film wdt:P577 ?pubDate. 
+        }GROUP BY ?film 
+      }
+	  {
+        SELECT (MIN (?pubDate1) AS ?date) 
+        WHERE{
+          ?film1 wdt:P31 wd:Q11424.
+          ?film1 wdt:P2142 ?boxOffice3.
+          ?film1 wdt:P577 ?pubDate1. 
+        }GROUP BY ?film1
+      }
+    }
+  }         
+}GROUP BY ?date
+
+-------------------------------------------------------------------------------------
+# Dimension incompleteness
+# Count facts with missing genres per cube cell
+# Still to be checked. There is no corresponding data indeed in our running dataset
+# Does this relate to how measures are treated? if non-strict measures are treted as facts, does this get affected?
+
+SELECT 
+?date
+(group_concat (?film; separator=",") AS ?grpFilm)
+(group_concat (?boxOffice; separator=",") AS ?grpBoxOffice) 
+(SUM(?boxOffice) as ?sum)
+(SUM (?isDateNotBounfForFilm) as ?numOfFIlmsWithNoDate)
+	WHERE{      
+      VALUES ?film {
+						 #taken
+						wd:Q277080
+                       #multi director - continent
+                       # Fast and Furious 6
+                       wd:Q5516100 
+                       # no box office
+                       # The Wolf of Wall Street
+                       wd:Q1392744 
+                       # multi box office
+                       # Rush Hour
+                       wd:Q255342
+          }
+	  {
+	    SELECT DISTINCT ?film ?boxOffice
+	    WHERE{
+	      {?film wdt:P31 wd:Q11424.          
+	      ?film wdt:P2142 ?boxOffice1.}
+	      {?film p:P2142  ?boxOfficeNode. 
+	      ?boxOfficeNode psv:P2142 ?value.
+	      ?value wikibase:quantityAmount ?boxOffice.
+	      ?value wikibase:quantityUnit  wd:Q4917.
+	      ?boxOfficeNode pq:P3005 wd:Q13780930.}
+	    }
+	  }  
+      bind (if (bound(?date), 0, 1) AS ?isDateNotBounfForFilm) 
+	  {
+	    SELECT DISTINCT ?film ?date
+	    WHERE{          
+	        {?film wdt:P31 wd:Q11424.          
+      ?film wdt:P2142 ?boxOffice1.}
+            OPTIONAL{
+      {
+        SELECT ?film  (MIN (?pubDate) AS ?date) 
+        WHERE{
+          ?film wdt:P31 wd:Q11424.
+          ?film wdt:P2142 ?boxOffice2.
+          ?film wdt:P577 ?pubDate. 
+        }GROUP BY ?film 
+      }
+	  {
+        SELECT (MIN (?pubDate1) AS ?date) 
+        WHERE{
+          ?film1 wdt:P31 wd:Q11424.
+          ?film1 wdt:P2142 ?boxOffice3.
+          ?film1 wdt:P577 ?pubDate1. 
+        }GROUP BY ?film1
+                }}
+	    }      
+	  }
+	}GROUP BY ?date

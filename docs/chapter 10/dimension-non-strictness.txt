@@ -1,0 +1,450 @@
+#Group by list (:genre)
+#Dimension non-strictness
+#Count Doubly
+#Table 7
+#Show set of facts and multiset of measures
+
+SELECT ?genre  
+       (group_concat(distinct ?film) AS ?filmsAll)
+       (group_concat(?boxOffice) AS ?sumBoxOffice) 
+WHERE { 
+		{
+			SELECT DISTINCT ?film
+			WHERE{
+				{?film wdt:P31 wd:Q11424.          
+				?film wdt:P2142 ?boxOffice1.}
+			}
+		}
+		
+		 OPTIONAL{
+			SELECT ?film ?boxOffice
+			WHERE {
+				{?film p:P2142  ?boxOfficeNode. 
+				 ?boxOfficeNode psv:P2142 ?value.
+				 ?value wikibase:quantityAmount ?boxOffice.
+				 ?value wikibase:quantityUnit  wd:Q4917.
+				 ?boxOfficeNode pq:P3005 wd:Q13780930.}
+			}		
+		}  
+			
+		{
+			SELECT DISTINCT ?film ?genre
+			WHERE{ 
+				{?film wdt:P31 wd:Q11424.          
+				?film wdt:P2142 ?boxOffice1.}		  
+				{?film wdt:P136  ?genre.}
+				{?genre wdt:P31 wd:Q201658.}
+			}
+		}		
+} 
+
+GROUP BY ?genre
+
+#===========================================================================
+
+#Group by list (:genre)
+#Dimension non-strictness
+#SPLIT equally 
+#Table 9
+
+SELECT ?genre1 (SUM(?boxOffice / ?countGenre) AS ?sumBoxOffice) 
+	  WHERE { 
+			{
+    			 SELECT DISTINCT ?film ?boxOffice
+    			 WHERE{
+    			    {?film wdt:P31 wd:Q11424.          
+    			     ?film wdt:P2142 ?boxOffice1.}
+    			    {?film p:P2142  ?boxOfficeNode. 
+    			     ?boxOfficeNode psv:P2142 ?value.
+    			     ?value wikibase:quantityAmount ?boxOffice.
+    			     ?value wikibase:quantityUnit  wd:Q4917.
+    			     ?boxOfficeNode pq:P3005 wd:Q13780930.}
+    			 }
+			}
+			{
+    			 SELECT DISTINCT ?film ?genre1
+    			 WHERE{ 
+    				  {?film wdt:P31 wd:Q11424.          
+    				   ?film wdt:P2142 ?boxOffice1.}		  
+    				  {?film wdt:P136  ?genre1.}
+    				  {?genre1 wdt:P31 wd:Q201658.}
+    		     }
+			}
+			{
+    			 SELECT  ?film (COUNT(DISTINCT ?genre) AS ?countGenre)
+    			 WHERE{ 
+    				  {?film wdt:P31 wd:Q11424.          
+    				   ?film wdt:P2142 ?boxOffice1.}		  
+    				  {?film wdt:P136  ?genre.}
+    				  {?genre wdt:P31 wd:Q201658.}
+    			} GROUP BY ?film  
+			}
+	  } GROUP BY ?genre1
+	  
+	  
+#version with weights per group
+SELECT 
+  ?genre1 
+  (group_concat(?boxOffice) as ?allBoxOffice)
+  (group_concat(1/?countGenre) as ?weight) 
+  (SUM(?boxOffice / ?countGenre) AS ?sumBoxOffice) 
+	  WHERE { 
+			{
+    			 SELECT DISTINCT ?film ?boxOffice
+    			 WHERE{
+    			    {?film wdt:P31 wd:Q11424.          
+    			     ?film wdt:P2142 ?boxOffice1.}
+    			    {?film p:P2142  ?boxOfficeNode. 
+    			     ?boxOfficeNode psv:P2142 ?value.
+    			     ?value wikibase:quantityAmount ?boxOffice.
+    			     ?value wikibase:quantityUnit  wd:Q4917.
+    			     ?boxOfficeNode pq:P3005 wd:Q13780930.}
+    			 }
+			}
+			{
+    			 SELECT DISTINCT ?film ?genre1
+    			 WHERE{ 
+    				  {?film wdt:P31 wd:Q11424.          
+    				   ?film wdt:P2142 ?boxOffice1.}		  
+    				  {?film wdt:P136  ?genre1.}
+    				  {?genre1 wdt:P31 wd:Q201658.}
+    		     }
+			}
+			{
+    			 SELECT  ?film (COUNT(DISTINCT ?genre) AS ?countGenre)
+    			 WHERE{ 
+    				  {?film wdt:P31 wd:Q11424.          
+    				   ?film wdt:P2142 ?boxOffice1.}		  
+    				  {?film wdt:P136  ?genre.}
+    				  {?genre wdt:P31 wd:Q201658.}
+    			} GROUP BY ?film  
+			}
+	  } GROUP BY ?genre1
+	  
+# film weight per coordinate 
+# Table 8
+  
+SELECT ?genre1 ?film ?weight
+WHERE {     	
+			{
+    			 SELECT DISTINCT ?film ?genre1
+    			 WHERE{ 
+    				  {?film wdt:P31 wd:Q11424.          
+    				   ?film wdt:P2142 ?boxOffice1.}		  
+    				  {?film wdt:P136  ?genre1.}
+    				  {?genre1 wdt:P31 wd:Q201658.}
+    		     }
+			}
+			{
+    			 SELECT  ?film (COUNT(DISTINCT ?genre) AS ?countGenre)
+    			 WHERE{ 
+    				  {?film wdt:P31 wd:Q11424.          
+    				   ?film wdt:P2142 ?boxOffice1.}		  
+    				  {?film wdt:P136  ?genre.}
+    				  {?genre wdt:P31 wd:Q201658.}
+    			} GROUP BY ?film  
+			}
+            BIND (1/?countGenre as ?weight)
+	  }
+
+#===========================================================================
+
+#Group by list (:genre)
+#Dimension non-strictness
+#MIN/MAX
+#Table 10
+
+#Main query
+SELECT 
+  ?genre1 
+  (SUM(?boxOffice) AS ?sumBoxOffice) 
+  (group_concat(?film) as ?concat)
+	  WHERE { 
+			{
+    			 SELECT DISTINCT ?film ?boxOffice
+    			 WHERE{
+    			    {?film wdt:P31 wd:Q11424.          
+    			     ?film wdt:P2142 ?boxOffice1.}
+    			    {?film p:P2142  ?boxOfficeNode. 
+    			     ?boxOfficeNode psv:P2142 ?value.
+    			     ?value wikibase:quantityAmount ?boxOffice.
+    			     ?value wikibase:quantityUnit  wd:Q4917.
+    			     ?boxOfficeNode pq:P3005 wd:Q13780930.}
+    			 }
+			}			
+			
+			{
+        SELECT  ?film (MIN(?genreLabel) AS ?genre1)
+    			 WHERE{ 
+    				  {?film wdt:P31 wd:Q11424.          
+    				   ?film wdt:P2142 ?boxOffice1.}		  
+    				  {?film wdt:P136  ?genre.}
+    				  {?genre wdt:P31 wd:Q201658.}
+            		 ?genre rdfs:label ?genreLabel
+    			} GROUP BY ?film  
+			}
+	  } GROUP BY ?genre1
+	  
+	  
+# Reporting 
+SELECT 
+  ?genre1
+  (group_concat(?film) as ?concat)
+  (sum(?hasMoreThanOneGenre) as ?sharedFactsCount)
+  ((count(distinct ?film) - sum(?hasMoreThanOneGenre)) as ?nonSharedFactsCount)
+WHERE { 
+   {
+        SELECT  ?film (MIN(?genreLabel) AS ?genre1)
+        WHERE{ 
+            {?film wdt:P31 wd:Q11424.          
+                ?film wdt:P2142 ?boxOffice1.}		  
+            {?film wdt:P136  ?genre.}
+            {?genre wdt:P31 wd:Q201658.}
+            ?genre rdfs:label ?genreLabel
+        } GROUP BY ?film  
+	}
+    {  
+        BIND ( IF(?countGenre > 1, 1, 0) AS ?hasMoreThanOneGenre)
+        {
+            SELECT ?film (count(distinct ?genreLabel) AS ?countGenre)
+            WHERE{ 
+                {?film wdt:P31 wd:Q11424.          
+                    ?film wdt:P2142 ?boxOffice1.}		  
+                {?film wdt:P136  ?genre.}
+                {?genre wdt:P31 wd:Q201658.}
+                ?genre rdfs:label ?genreLabel
+            } GROUP BY ?film
+        }
+	}    
+} GROUP BY ?genre1
+
+# Report contribution to agg measure using two separate queryies
+
+PREFIX hint: <http://www.bigdata.com/queryHints#>
+
+
+select ?genre1 ?concat ?sharedFactsCount  ?nonSharedFactsCount ?specialSum ?allSum
+{{SELECT ?genre1
+ 
+  (group_concat(?film) as ?concat)
+  (sum(?hasMoreThanOneGenre) as ?sharedFactsCount)
+  ((count(distinct ?film) - sum(?hasMoreThanOneGenre)) as ?nonSharedFactsCount)
+WHERE {
+   {
+        SELECT  ?film (MIN(?genreLabel) AS ?genre1)
+        WHERE{ 
+            {?film wdt:P31 wd:Q11424.          
+                ?film wdt:P2142 ?boxOffice1.}		  
+            {?film wdt:P136  ?genre.}
+            {?genre wdt:P31 wd:Q201658.}
+            ?genre rdfs:label ?genreLabel
+        } GROUP BY ?film  
+	}
+    {           
+        {
+            SELECT ?film (count(distinct ?genreLabel) AS ?countGenre)
+            WHERE{ 
+                {?film wdt:P31 wd:Q11424.          
+                    ?film wdt:P2142 ?boxOffice1.}		  
+                {?film wdt:P136  ?genre.}
+                {?genre wdt:P31 wd:Q201658.}
+                ?genre rdfs:label ?genreLabel
+            } GROUP BY ?film
+        }
+        BIND ( IF(?countGenre > 1, 1, 0) AS ?hasMoreThanOneGenre)        
+	}
+        
+} GROUP BY ?genre1}
+
+{SELECT ?genre1
+
+(group_concat(?specialBoxOffice) as ?spec)
+(sum(?specialBoxOffice) as ?specialSum)
+(sum(?boxOffice) as ?allSum)
+WHERE {
+   {
+        SELECT  ?film (MIN(?genreLabel) AS ?genre1)
+        WHERE{ 
+            {?film wdt:P31 wd:Q11424.          
+                ?film wdt:P2142 ?boxOffice1.}		  
+            {?film wdt:P136  ?genre.}
+            {?genre wdt:P31 wd:Q201658.}
+            ?genre rdfs:label ?genreLabel
+        } GROUP BY ?film  
+	}
+    {           
+        {
+            SELECT ?film (count(distinct ?genreLabel) AS ?countGenre)
+            WHERE{ 
+                {?film wdt:P31 wd:Q11424.          
+                    ?film wdt:P2142 ?boxOffice1.}		  
+                {?film wdt:P136  ?genre.}
+                {?genre wdt:P31 wd:Q201658.}
+                ?genre rdfs:label ?genreLabel
+            } GROUP BY ?film
+        }
+        BIND ( IF(?countGenre > 1, 1, 0) AS ?hasMoreThanOneGenre) 
+        {
+        SELECT DISTINCT ?film ?boxOffice
+        WHERE{
+            {?film wdt:P31 wd:Q11424.          
+            ?film wdt:P2142 ?boxOffice1.}
+            {?film p:P2142  ?boxOfficeNode. 
+            ?boxOfficeNode psv:P2142 ?value.
+            ?value wikibase:quantityAmount ?boxOffice.
+            ?value wikibase:quantityUnit  wd:Q4917.
+            ?boxOfficeNode pq:P3005 wd:Q13780930.}
+		} 
+	}BIND ( IF(?countGenre > 1, ?boxOffice, 0) AS ?specialBoxOffice)	
+	}
+        
+} GROUP BY ?genre1
+}}
+
+#===========================================================================
+Bonus examples
+#===========================================================================
+# Dimension non-strictness
+# Use MIN
+# Report
+
+select 
+?genre1
+#?grp
+(group_concat(?film; separator=",") as ?allFilms)
+(sum (?var) as ?sumVar) 
+(count (?film) as ?filmCnt)
+(sum (?cnt0) as ?CountFilmsWithOneOrLessGenrePerFilm) 
+(sum (?cnt1) as ?CountFilmsWithMoreThanOneGenrePerFilm)
+
+where{       
+
+  
+  BIND (if (?cntGenre <= 1, "One Or less", "More than one") AS ?grp)  
+  BIND (if (?cntGenre <= 1, 1, 0) AS ?cnt0)
+    BIND (if (?cntGenre > 1, 1, 0) AS ?cnt1)
+    {
+        select distinct ?film ?cntGenre ?var
+        {            
+            BIND (if (?cntGenre > 1, 0, 1) AS ?var)
+            {
+                select ?film (count (distinct ?genre) as ?cntGenre) 
+                where{
+                  ?film wdt:P136 ?genre. 
+                }group by ?film
+            }
+        }
+    }
+    {
+        
+        SELECT  ?film (MIN(?genreLabel) AS ?genre1)
+    			 WHERE{ 
+    				  {?film wdt:P31 wd:Q11424.          
+    				   ?film wdt:P2142 ?boxOffice1.}		  
+    				  {?film wdt:P136  ?genre.}
+    				  {?genre wdt:P31 wd:Q201658.}
+            		 ?genre rdfs:label ?genreLabel
+    			} GROUP BY ?film  
+			
+    }
+                
+}
+group  by ?genre1 #?grp
+
+
+#==================================
+# complex group by with two levels.
+# Tell per each coordinate how many facts belong to also other coordinates
+
+select 
+?genre
+?date
+#?grp
+(group_concat(?film; separator=",") as ?allFilms)
+(sum (?var) as ?sumVar) 
+(count (?film) as ?filmCnt)
+(sum (?cnt0) as ?CountFilmsWithOneOrLessGenrePerFilm) 
+(sum (?cnt1) as ?CountFilmsWithMoreThanOneGenrePerFilm)
+
+(sum (?varDate) as ?sumVarDate) 
+(sum (?cntDate0) as ?dateCountFilmsWithOneOrLessGenrePerFilm) 
+(sum (?cntDate1) as ?dateCountFilmsWithMoreThanOneGenrePerFilm)
+
+(group_concat(?moreThanOne; separator=",") as ?moreThanOneAnatomy)
+(group_concat(?cntGenreA; separator=",") as ?moreThanOneAnatomy1)
+(group_concat(?cntDateA; separator=",") as ?moreThanOneAnatomy2)
+
+
+(sum(?moreThanOne) as ?sumMoreThanOneCoordinatePerFact)
+
+where{       
+              
+  
+    VALUES ?film {
+						#taken
+						wd:Q277080
+                       #multi director - continent
+                       # Fast and Furious 6
+                       wd:Q5516100 
+                       # no box office
+                       # The Wolf of Wall Street
+                       wd:Q1392744 
+                       # multi box office
+                       # Rush Hour
+                       wd:Q255342
+          }  
+          
+	 ?film wdt:P136 ?genre. ?genre wdt:P31 wd:Q201658.
+  
+  
+  BIND (if (?cntGenre > 1, 2, 1) AS ?cntGenreA)
+  
+  BIND (if (?cntGenre <= 1, "One Or less", "More than one") AS ?grp)  
+  BIND (if (?cntGenre <= 1, 1, 0) AS ?cnt0)
+    BIND (if (?cntGenre > 1, 1, 0) AS ?cnt1)
+    {
+        select distinct ?film ?cntGenre ?var
+        {            
+            BIND (if (?cntGenre > 1, 0, 1) AS ?var)
+            {
+                select ?film (count (distinct ?genre) as ?cntGenre) 
+                where{
+                  ?film wdt:P136 ?genre. 
+                }group by ?film
+            }
+        }
+    }
+    {
+        select distinct ?film ?genre where{            
+             ?film wdt:P136 ?genre.
+        }
+    }
+  
+    
+  BIND (if (?cntDate <= 1, "One Or less", "More than one") AS ?grpDate)  
+  BIND (if (?cntDate <= 1, 1, 0) AS ?cntDate0)
+    BIND (if (?cntDate > 1, 1, 0) AS ?cntDate1)
+  
+   BIND (if (?cntDate > 1, 2, 1) AS ?cntDateA)    
+   {
+     
+        select distinct ?film ?cntDate ?varDate
+        {            
+            BIND (if (?cntDate > 1, 0, 1) AS ?varDate)
+            {
+               SELECT ?film  (count (?date) AS ?cntDate) {
+                {SELECT ?film  (MIN (?pubDate) AS ?date) 
+                WHERE{
+                  ?film wdt:P31 wd:Q11424.
+                  ?film wdt:P2142 ?boxOffice2.
+                  ?film wdt:P577 ?pubDate. 
+                }GROUP BY ?film 
+                }
+            }GROUP BY ?film 
+        }
+     }
+ }
+ BIND (if (?cntGenreA > 1 || ?cntDateA  > 1 , 1, 0) AS ?moreThanOne)
+                
+}
+group  by ?genre ?date #?grp

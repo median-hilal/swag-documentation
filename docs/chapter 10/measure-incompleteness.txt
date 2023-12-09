@@ -1,0 +1,43 @@
+# Measure incompleteness, default and report
+
+SELECT 
+	?genre 
+	(SUM(?alterBoxOffice) AS ?sumBoxOffice) 
+	(GROUP_CONCAT(DISTINCT ?film;SEPARATOR=",") AS ?films) 
+	(GROUP_CONCAT(?alterBoxOffice;SEPARATOR=",") AS ?boxOffices) 
+	(SUM( ?unBoundMsr) AS ?factsDefaulted) 
+WHERE
+{   
+	{
+        SELECT distinct 
+			?film 
+			(coalesce(?boxOffice, 300) as ?alterBoxOffice) 
+			(If(bound(?boxOffice), 0, 1) as ?unBoundMsr)
+		WHERE
+		{
+			{?film wdt:P31 wd:Q11424.          
+			?film wdt:P2142 ?boxOffice1.}
+			
+			OPTIONAL{
+				?film p:P2142  ?boxOfficeNode. 
+				?boxOfficeNode psv:P2142 ?value.
+				?value wikibase:quantityAmount ?boxOffice.
+				?value wikibase:quantityUnit  wd:Q4917.
+				?boxOfficeNode pq:P3005 wd:Q13780930.
+			}						
+		}
+	}		
+	{ 
+		SELECT DISTINCT ?film ?genre
+		WHERE
+		{ 
+		    {?film wdt:P31 wd:Q11424.          
+		    ?film wdt:P2142 ?boxOffice1.}		  
+		    {?film wdt:P136  ?genre.}
+		    {?genre wdt:P31 wd:Q201658.}                      
+		}
+	}
+} GROUP BY ?genre
+
+
+#===========================================================================

@@ -1,0 +1,142 @@
+===========================================================
+===================== WARNING =============================
+===========================================================
+!!!WARNING: MAY BE OLD!! CHECK films.ttl FOR UPDATED DATA!
+===========================================================
+===========================================================
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+select ?filmL ?countryL
+where{
+ ?film rdfs:label ?filmL.
+?country rdfs:label ?countryL.
+?film  <http://www.wikidata.org/prop/direct/P495>  ?country .
+}
+
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT  ?filmL
+            WHERE
+              { 
+    ?film rdfs:label ?filmL.
+    ?film  <http://www.wikidata.org/prop/direct/P31>  <http://www.wikidata.org/entity/Q11424> ;
+                       <http://www.wikidata.org/prop/direct/P2142>  ?boxOffice1
+              }
+
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT DISTINCT  ?filmL ?boxOffice
+      WHERE
+        { 
+      ?film rdfs:label ?filmL.
+    {  ?film     <http://www.wikidata.org/prop/P2142>  ?boxOfficeNode .
+                ?boxOfficeNode
+                          <http://www.wikidata.org/prop/statement/value/P2142>  ?value .
+                ?value    <http://wikiba.se/ontology#quantityAmount>  ?boxOffice ;
+                          <http://wikiba.se/ontology#quantityUnit>  <http://www.wikidata.org/entity/Q4917> .
+                ?boxOfficeNode
+                          <http://www.wikidata.org/prop/qualifier/P3005>  <http://www.wikidata.org/entity/Q13780930>
+              }
+          }
+        
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+Select ?genreL ?genre where{ 
+    ?genre rdfs:label ?genreL.
+                ?genre <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q201658>.}
+
+
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT distinct ?filmL ?genre ?genreL where{
+    ?film rdfs:label ?filmL.
+     ?genre rdfs:label ?genreL.
+?film <http://www.wikidata.org/prop/direct/P136> ?genre.}
+
+
+
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select ?filmL ?directorL where {
+     ?film rdfs:label ?filmL.
+?director rdfs:label ?directorL.
+    ?film <http://www.wikidata.org/prop/direct/P57> ?director.}
+
+
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select ?directorL where {
+    ?director rdfs:label ?directorL.
+                ?director <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q5>.
+}
+
+
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT  ?countryL
+                where {
+    ?country rdfs:label ?countryL.
+    ?country <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q6256>}
+
+
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+select ?continentL
+                where {
+    ?continent rdfs:label ?continentL.
+                ?continent <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q5107> .}
+
+
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+select ?countryL ?continentL where{
+    ?country rdfs:label ?countryL.
+    ?continent rdfs:label ?continentL.
+    ?country <http://www.wikidata.org/prop/direct/P30> ?continent.}
+
+
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+select ?genderL where {
+    ?gender rdfs:label ?genderL.
+    ?gender <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q48264>.
+}
+
+
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+select ?directorL ?genderL
+where{
+    ?director rdfs:label ?directorL.
+    ?gender rdfs:label ?genderL.
+  ?director <http://www.wikidata.org/prop/direct/P21> ?gender.
+}
+
+
+
+SELECT ?date where {   
+    {SELECT ?film1 (MIN (?pubDate1) AS ?date) 
+        WHERE {
+            ?film1 <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q11424>.
+            ?film1 <http://www.wikidata.org/prop/direct/P2142> ?boxOffice3.
+            ?film1 <http://www.wikidata.org/prop/direct/P577> ?pubDate1. 
+        }        
+        GROUP BY ?film1 }
+}
+
+
+
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?filmL ?date where {  
+    ?film1 rdfs:label ?filmL.
+   {SELECT ?film1 (MIN (?pubDate1) AS ?date) 
+        WHERE {
+            ?film1 <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/entity/Q11424>.
+            ?film1 <http://www.wikidata.org/prop/direct/P2142> ?boxOffice3.
+            ?film1 <http://www.wikidata.org/prop/direct/P577> ?pubDate1. 
+        } GROUP BY ?film1 
+    } 
+}

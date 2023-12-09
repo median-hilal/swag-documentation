@@ -1,0 +1,111 @@
+===========================================================
+===================== WARNING =============================
+===========================================================
+!!!WARNING: OLD DATA!! CHECK films.ttl FOR UPDATED DATA!!!!
+===========================================================
+===========================================================
+
+#film
+
+SELECT ?film WHERE {?film wdt:P31 wd:Q11424. ?film wdt:P2142 ?boxOffice1.
+}
+
+SELECT ?label WHERE {?film wdt:P31 wd:Q11424. ?film wdt:P2142 ?boxOffice1.
+  ?film rdfs:label ?label
+}
+
+=================================
+
+#Country 
+SELECT ?country WHERE {?country wdt:P31 wd:Q6256}
+
+SELECT ?label WHERE {?country wdt:P31 wd:Q6256.   ?country rdfs:label ?label}
+
+=================================
+
+#Continent
+
+SELECT ?continent WHERE {?continent wdt:P31 wd:Q5107.}
+SELECT ?label WHERE {?continent wdt:P31 wd:Q5107. ?continent rdfs:label ?label}
+
+=================================
+
+#Director
+SELECT ?director WHERE {?director wdt:P31 wd:Q5}
+SELECT ?label WHERE {?director wdt:P31 wd:Q5. ?director rdfs:label ?label}
+
+=================================
+
+#Gender
+SELECT ?gender WHERE {?gender wdt:P31 Q48264}
+SELECT ?label WHERE {?gender wdt:P31 wd:Q48277. ?gender rdfs:label ?label}
+
+=================================
+
+#Date
+SELECT ?date WHERE {
+{SELECT ?film (MIN (?pubDate) AS ?date) WHERE
+{?film wdt:P31 wd:Q11424.
+?film wdt:P2142 ?boxOffice3.
+?film wdt:P577 ?pubDate.}
+GROUP BY ?film}}
+
+=================================
+#film, country
+
+SELECT ?film ?country WHERE {?film wdt:P495 ?country}
+SELECT ?filmLabel ?countryLabel WHERE {?film wdt:P495 ?country. ?film rdfs:label ?filmLabel. ?country rdfs:label ?countryLabel.}
+
+=================================
+# country, continent
+SELECT ?country ?continent WHERE {?country wdt:P30 ?continent}
+SELECT ?countryLabel ?continentLabel WHERE {?country wdt:P30 ?continent. ?country rdfs:label ?country. ?continent rdfs:label ?continentLabel}
+
+=================================
+
+#film, director
+SELECT ?film ?director WHERE {?film wdt:P57 ?director}
+SELECT ?filmLabel ?directorLabel WHERE {?film wdt:P57 ?director. ?film rdfs:label ?filmLabel. ?director rdfs:label ?directorLabel}
+
+=================================
+
+#Director, gender
+SELECT ?director ?gender WHERE {?director wdt:P21 ?gender}
+SELECT ?directorLabel ?genderLabel WHERE {?director wdt:P21 ?gender. ?director rdfs:label ?directorLabel. ?gender rdfs:label ?genderLabel}
+
+=================================
+
+#Film, date
+SELECT ?film ?date WHERE {
+{SELECT ?film (MIN (?pubDate) AS ?date) WHERE
+{?film wdt:P31 wd:Q11424.
+?film wdt:P2142 ?boxOffice2.
+?film wdt:P577 ?pubDate.}
+GROUP BY ?film}}
+
+SELECT ?filmLabel ?date WHERE {
+{SELECT ?film (MIN (?pubDate) AS ?date) WHERE
+{?film wdt:P31 wd:Q11424.
+?film wdt:P2142 ?boxOffice2.
+?film wdt:P577 ?pubDate.}
+GROUP BY ?film}
+?film rdfs:label ?filmLabel.}
+
+=================================
+#Film, boxoffice
+
+SELECT ?film ?boxOffice WHERE {
+?film p:P2142 ?boxOfficeNode.
+?boxOfficeNode psv:P2142 ?value.
+?value wikibase:quantityAmount ?boxOffice.
+?value wikibase:quantityUnit wd:Q4917.
+?boxOfficeNode pq:P3005 wd:Q13780930.}
+
+SELECT ?filmLabel ?boxOffice WHERE {
+?film p:P2142 ?boxOfficeNode.
+?boxOfficeNode psv:P2142 ?value.
+?value wikibase:quantityAmount ?boxOffice.
+?value wikibase:quantityUnit wd:Q4917.
+?boxOfficeNode pq:P3005 wd:Q13780930.
+
+?film rdfs:label ?filmLabel.}

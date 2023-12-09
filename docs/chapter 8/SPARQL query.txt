@@ -1,0 +1,79 @@
+############### Works against the data set from chapter 5 ##########################
+
+PREFIX : <http://www.dke.jku.ac.at/swag/ag#> 
+PREFIX gn: <http://www.geonames.org/ontology#> 
+PREFIX pr: <http://www.dke.jku.ac.at/swag/pr#> 
+PREFIX qb: <http://purl.org/linked-data/cube#> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX smd: <http://www.dke.jku.ac.at/swag/smd#> 
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> 
+PREFIX xml: <http://www.w3.org/XML/1998/namespace> 
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
+PREFIX qb4o: <http://purl.org/qb4olap/cubes#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX vann: <http://purl.org/vocab/vann/> 
+PREFIX voaf: <http://purl.org/vocommons/voaf#> 
+PREFIX dcterms: <http://purl.org/dc/terms/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX schema: <http://www.fing.edu.uy/inco/cubes/schemas/migr_asyapp#> 
+prefix sdmx-measure:   <http://purl.org/linked-data/sdmx/2009/measure#>
+prefix property:       <http://eurostat.linked-statistics.org/property#>
+prefix sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+prefix geo:            <http://eurostat.linked-statistics.org/dic/geo#>
+
+SELECT *
+WHERE { 
+    {
+        SELECT 
+            ?SI_citizen  
+            ?SI_sumOfNumberOfApplications ?SC_sumOfNumberOfApplications 
+            (  
+                 (?SI_sumOfNumberOfApplications - ?SC_sumOfNumberOfApplications)
+                  AS ?deltaSumOfNumOfApps
+             )   
+        WHERE {     
+            {
+                SELECT 
+                    (?citizen AS ?SI_citizen)
+                    (SUM(xsd:integer(?numOfApps)) AS ?SI_sumOfNumberOfApplications)  
+                WHERE { 
+                    ?migAsylumApps sdmx-measure:obsValue  ?numOfApps;
+                                                 a qb:Observation ;  
+                                                 sdmx-dimension:refPeriod  ?refPeriod ;
+                                                 property:citizen  ?citizen ;
+                                                 property:geo ?geo .   
+                    ?refPeriod  qb4o:memberOf  sdmx-dimension:refPeriod .                
+                    ?citizen    qb4o:memberOf  property:citizen . 
+                    ?geo        qb4o:memberOf  property:geo .  
+                    FILTER ( ?geo = geo:DE ) 
+                    FILTER ( xsd:integer(substr(strafter(str(?refPeriod), "#"),
+                        1, 4)) >= 2014) 
+                } 
+                GROUP BY ?citizen 
+            }   
+            { 
+                SELECT
+                    (?citizen AS ?SC_citizen) 
+                    (SUM(xsd:integer(?numOfApps)) AS ?SC_sumOfNumberOfApplications)    
+                WHERE {
+                    ?migAsylumApps sdmx-measure:obsValue  ?numOfApps ;
+                                                 a qb:Observation ;
+                                                 sdmx-dimension:refPeriod  ?refPeriod ;
+                                                 property:citizen  ?citizen ;
+                                                 property:geo ?geo .
+                    ?refPeriod  qb4o:memberOf  sdmx-dimension:refPeriod .                
+                    ?citizen    qb4o:memberOf  property:citizen .                
+                    ?geo        qb4o:memberOf  property:geo .      
+                    FILTER ( ?geo = geo:UK )
+                    FILTER ( xsd:integer(substr(strafter(str(?refPeriod), "#"),
+                        1, 4)) >= 2014)
+                } 
+                GROUP BY ?citizen 
+            } 
+            FILTER ( ?SI_citizen = ?SC_citizen ) 
+        }
+    }
+    FILTER ( 
+        ?SI_sumOfNumberOfApplications - ?SC_sumOfNumberOfApplications > 0 ) 
+}

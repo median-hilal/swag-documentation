@@ -1,0 +1,125 @@
+#Dimension incompleteness
+# Discard missing
+# Table 11
+
+SELECT ?date (GROUP_CONCAT(?film;SEPARATOR=",") AS ?films)
+WHERE
+{          	    
+    {
+        SELECT DISTINCT ?film  ?date
+        WHERE{          
+            {?film wdt:P31 wd:Q11424.          
+             ?film wdt:P2142 ?boxOffice1.}
+            {
+                SELECT ?film (MIN (?pubDate) AS ?date) 
+                WHERE{
+                    ?film wdt:P31 wd:Q11424.
+                    ?film wdt:P2142 ?boxOffice2.
+                    ?film wdt:P577 ?pubDate. 
+                }
+                GROUP BY ?film
+            }
+        }
+    }        
+}GROUP BY ?date
+
+#==========================================================
+
+#Dimension incompleteness
+# Default "Other" value
+# Table 12
+
+SELECT 
+	?date1
+	(GROUP_CONCAT(?film;SEPARATOR=",") AS ?films)
+	(SUM(?defaulted) as ?defaultedFacts)
+WHERE{          
+    {
+        SELECT DISTINCT ?film
+        WHERE{
+            {?film wdt:P31 wd:Q11424.          
+             ?film wdt:P2142 ?boxOffice1.}	     
+        }
+    }  
+    {
+        SELECT DISTINCT ?film 
+        (COALESCE(?date, "UnknownDate") AS ?date1)
+        ?defaulted
+        WHERE{          
+            {?film wdt:P31 wd:Q11424.          
+             ?film wdt:P2142 ?boxOffice1.}
+             OPTIONAL{
+                 {
+                    SELECT ?film ?date
+                    WHERE{ 
+                        {
+                            SELECT ?film (MIN (?pubDate) AS ?date) 
+                            WHERE{
+                                ?film wdt:P31 wd:Q11424.
+                                ?film wdt:P2142 ?boxOffice2.
+                                ?film wdt:P577 ?pubDate. 
+                            }
+                            GROUP BY ?film
+                        }
+                    }
+                }                
+                {
+                    SELECT ?date
+                     WHERE{ 
+                        {
+                            SELECT ?film1 (MIN (?pubDate1) AS ?date) 
+                            WHERE{
+                                ?film1 wdt:P31 wd:Q11424.
+                                ?film1 wdt:P2142 ?boxOffice3.
+                                ?film1 wdt:P577 ?pubDate1. 
+                            }
+                            GROUP BY ?film1
+                        }
+                    }
+                }
+            }
+            BIND (IF (BOUND(?date), 0, 1) AS ?defaulted) 
+        }      
+    }         
+}GROUP BY ?date1
+
+
+#===========================================================================
+
+# Default Sub member value
+
+SELECT ?date1 (GROUP_CONCAT(?film;SEPARATOR=",") AS ?films) 
+	WHERE{          
+	  {
+	    SELECT DISTINCT ?film
+	    WHERE{
+	      {?film wdt:P31 wd:Q11424.          
+	      ?film wdt:P2142 ?boxOffice1.}	     
+	    }
+	  }  
+	  {
+	    SELECT DISTINCT ?film 
+		  (COALESCE(?date, ?film) AS ?date1) 
+	    WHERE{          
+	      {?film wdt:P31 wd:Q11424.          
+	      ?film wdt:P2142 ?boxOffice1.}
+	      OPTIONAL{
+	        SELECT ?film ?date
+	        WHERE{ 
+		      {
+		        SELECT ?film (MIN (?pubDate) AS ?date) 
+		        WHERE{
+		          ?film wdt:P31 wd:Q11424.
+		          ?film wdt:P2142 ?boxOffice2.
+		          ?film wdt:P577 ?pubDate. 
+		        }
+		        GROUP BY ?film
+		     }
+		   } 
+	      }
+	    }      
+	  }         
+	}GROUP BY ?date1
+
+
+#===========================================================================
