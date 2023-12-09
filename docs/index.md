@@ -53,7 +53,7 @@ Results from the [data](usability/data.csv) demonstrate that SWAG can be employe
 
 
 # Chapter 4: Enriched Multidimensional Model
-[SPARQL queries to retrieve the MD elements and instances of the Asylum Applications Enriched MD model from the RDF representation] (chapter 4/QB4OLAP queries.txt)
+[SPARQL queries to retrieve the MD elements and instances of the Asylum Applications Enriched MD model from the RDF representation] (chapter 4/queries.txt)
 [MD Schema for Asylum Applications] (https://github.com/lorenae/qb4olap/blob/master/examples/eurostat_schema_QB4OLAP_v1.3.ttl)
 [Dimension Instances for Asylum Applications] (https://github.com/lorenae/qb4olap/blob/master/examples/eurostat_instances_QB4OLAP_v1.3.ttl)
 [Observations] (chapter 4/observations.ttl)
