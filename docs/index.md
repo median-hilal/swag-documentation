@@ -31,3 +31,11 @@
 * [Measure Inceompleteness Queries](chapter 10/measure-incompleteness.txt)
 * [Measure Non-Strictness Queries](chapter 10/measure-non-strictness.txt)
 * [Reporting](chapter 10/reporting tests.txt)
+
+# Chapter 11: SWAG-BI Proof of Concept Prototype
+* [Data Set - Table 10.1](chapter 10/chapter_10_wikidata_summ_data.ttl)
+* [Dimension Inceompleteness Queries](chapter 10/dimension-incompleteness.txt)
+* [Dimension Non-Strictness Queries](chapter 10/dimension-non-strictness.txt)
+* [Measure Inceompleteness Queries](chapter 10/measure-incompleteness.txt)
+* [Measure Non-Strictness Queries](chapter 10/measure-non-strictness.txt)
+* [Reporting](chapter 10/reporting tests.txt)

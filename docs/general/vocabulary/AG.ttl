@@ -1,0 +1,1340 @@
+@prefix : <http://www.dke.jku.ac.at/swag/ag#> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix pr: <http://www.dke.jku.ac.at/swag/pr#> .
+@prefix qb: <http://purl.org/linked-data/cube#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix smd: <http://www.dke.jku.ac.at/swag/smd#> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix qb4o: <http://purl.org/qb4olap/cubes#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix voaf: <http://purl.org/vocommons/voaf#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@base <http://www.dke.jku.ac.at/swag/ag> .
+
+<http://www.dke.jku.ac.at/swag/ag> rdf:type owl:Ontology ;
+                                    dcterms:title "The Semantic Web Analysis Graphs Vocabulary." ;
+                                    vann:preferredNamespacePrefix "ag" ;
+                                    vann:preferredNamespaceUri "http://www.dke.jku.ac.at/swag/ag#" ;
+                                    rdfs:comment "This vocabulary allows for the modeling analytical processes as graph composed of analysis situations connected by navigation steps."@en ;
+                                    rdfs:label "The Semantic Web Analysis Graphs Vocabulary." ;
+                                    owl:versionInfo "1.0" .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.dke.jku.ac.at/swag/ag#opDiceNode
+:opDiceNode rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf :opDiceNodeInAG ;
+                rdfs:domain :MoveAsideToNode ;
+                rdfs:range qb4o:LevelMember .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#resultMeasureMDElement
+:resultMeasureMDElement rdf:type owl:ObjectProperty ;
+                            rdfs:subPropertyOf :predicateOrResultMeasureProperty ;
+                            rdfs:domain :ResultMeasure ;
+                            rdfs:range :ExpressionMDElement .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#analysisGraphProperty
+:analysisGraphProperty rdf:type owl:ObjectProperty .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#analysisSituation
+:analysisSituation rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf :analysisGraphProperty ;
+                   rdfs:domain :AnalysisGraph ;
+                   rdfs:range :AnalysisSituation ;
+                   rdfs:comment "Links an analysis graph to a member analysis situation."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#analysisSituationProperty
+:analysisSituationProperty rdf:type owl:ObjectProperty .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#baseMeasurePredicateInAG
+:baseMeasurePredicateInAG rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf :analysisSituationProperty ;
+                          rdfs:domain :AnalysisSituation ;
+                          rdfs:range :GroundBaseMeasurePredicate ;
+                          rdfs:comment "Specifies a conditoin over a measure." .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#binding
+:binding rdf:type owl:ObjectProperty ;
+         rdfs:domain :Pair ;
+         rdfs:range :Constant .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#clause
+:clause rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf :predicateOrResultMeasureProperty ;
+        rdfs:domain :Predicate ;
+        rdfs:range :Clause .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#cube
+:cube rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :analysisSituationProperty ;
+      rdfs:range qb:DataStructureDefinition ;
+      rdfs:comment "Specifies the cube of an analysis situtation."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#dataType
+:dataType rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :predicateOrResultMeasureProperty ;
+          rdfs:domain :PredicateVariable ;
+          rdfs:range rdfs:Datatype .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#dataset
+:dataset rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf :analysisSituationProperty ;
+         rdfs:range qb:DataSet ;
+         rdfs:comment "Specifies the dataset of an analysis situation."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#derivedFrom
+:derivedFrom rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf :predicateOrResultMeasureProperty ;
+             rdf:type owl:TransitiveProperty ;
+             rdfs:domain :GroundPredicate ;
+             rdfs:range :FreePredicate ;
+             rdfs:comment "Specifies the type of the predicate."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#dice
+:dice rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :analysisSituationProperty ;
+      rdfs:domain :AnalysisSituation ;
+      rdfs:range :Dice ;
+      rdfs:comment "Specifies a combination of a dice level and a corresponding dice value."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#diceLevelInAG
+:diceLevelInAG rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf :analysisSituationProperty ;
+               rdfs:domain :Dice ;
+               rdfs:range :LevelInAG ;
+               rdfs:comment "Specifies the level on which the restriction of values (dice) is performed."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#diceNodeInAG
+:diceNodeInAG rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf :analysisSituationProperty ;
+              rdfs:domain :Dice ;
+              rdfs:range :LevelMemberInAG ;
+              rdfs:comment "Specifies a value to restrict the dice level to."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#dimension
+:dimension rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :analysisSituationProperty ;
+           rdfs:domain :DimensionSpecification ;
+           rdfs:range qb:DimensionProperty ;
+           rdfs:comment "Specifies a dimension property."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#dimensionPredicateInAG
+:dimensionPredicateInAG rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf :analysisSituationProperty ;
+                        rdfs:domain :DimensionSelection ;
+                        rdfs:range :GroundDimensionPredicateInAG ;
+                        rdfs:comment "Specifies a dimension predicate."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#dimensionSelection
+:dimensionSelection rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf :analysisSituationProperty ;
+                    rdfs:domain :AnalysisSituation ;
+                    rdfs:range :DimensionSelection .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#dimensionSummarizability
+:dimensionSummarizability rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf :summarizabilityProperty ;
+                          rdfs:domain :AnalysisGraph ,
+                                      :AnalysisSituation ;
+                          rdfs:range :DimensionSummarizability .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#granularity
+:granularity rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf :analysisSituationProperty ;
+             rdfs:domain :AnalysisSituation ;
+             rdfs:range :Granularity ;
+             rdfs:comment "Specifies a granularity of an analysis situation."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#granularityLevelInAG
+:granularityLevelInAG rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf :analysisSituationProperty ;
+                      rdfs:domain :Granularity ;
+                      rdfs:range :LevelInAG ;
+                      rdfs:comment "Specifies a granularity level property."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#hasConfiguration
+:hasConfiguration rdf:type owl:ObjectProperty .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#hierarchy
+:hierarchy rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :analysisSituationProperty ;
+           rdfs:domain :DimensionSpecification ;
+           rdfs:range qb4o:Hierarchy ;
+           rdfs:comment "Specifies a hierarchy." .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#impliedBy
+:impliedBy rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :predicateOrResultMeasureProperty ;
+           owl:inverseOf :implies ;
+           rdfs:domain :GroundPredicate ;
+           rdfs:range :GroundPredicate ;
+           rdfs:comment "Specifies an inverse implication relationship between two predicates."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#implies
+:implies rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf :predicateOrResultMeasureProperty ;
+         rdfs:domain :GroundPredicate ;
+         rdfs:range :GroundPredicate ;
+         rdfs:comment "Specifies an implication relationship between two predicates."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#incomplete
+:incomplete rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf :summarizabilityProperty ;
+            rdfs:domain :Summarizability ;
+            rdfs:range :IncompleteMeasureMode ,
+                       :NonStrictMeasureMode .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#mdElement
+:mdElement rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :predicateOrResultMeasureProperty ;
+           rdfs:domain :ExpressionMDElement ;
+           rdfs:range :MDElement .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#mdSelection
+:mdSelection rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf :analysisSituationProperty ;
+             rdfs:domain :AnalysisSituation ;
+             rdfs:range :MDSelection .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#measureProperty
+:measureProperty rdf:type owl:ObjectProperty ;
+                 rdfs:comment "Abstract property of measure properties."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#measureSummarizability
+:measureSummarizability rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf :summarizabilityProperty ;
+                        rdfs:domain :AnalysisGraph ,
+                                    :AnalysisSituation ;
+                        rdfs:range :MeasureSummarizability ;
+                        rdfs:comment "Connects an analysis situation or an analysis graph to its summarizability resolution configurations."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#mode
+:mode rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :summarizabilityProperty ;
+      rdfs:domain :SummarizabilityConfig ;
+      rdfs:range :SummarizabilityMode .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#navigationOperationProperty
+:navigationOperationProperty rdf:type owl:ObjectProperty ;
+                             rdfs:domain :AddResultPredicate ;
+                             rdfs:comment "Abstract property of navigation operations." .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#navigationStep
+:navigationStep rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf :analysisGraphProperty ;
+                rdfs:domain :AnalysisGraph ;
+                rdfs:range :NavigationStep ;
+                rdfs:comment "Links an analysis graph to a member navigation step. "@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#navigationStepProperty
+:navigationStepProperty rdf:type owl:ObjectProperty ;
+                        rdfs:comment "Abstract property of navigation steps." .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#node
+:node rdf:type owl:ObjectProperty .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#nonStrict
+:nonStrict rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :summarizabilityProperty ;
+           rdfs:domain :Summarizability ;
+           rdfs:range :NonStrictDimSummarizabilityConfig ,
+                      :NonStrictMsrSummarizabilityConfig .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#onSchema
+:onSchema rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :analysisGraphProperty ;
+          rdfs:domain :AnalysisGraph ;
+          rdfs:range smd:MDSchema ;
+          rdfs:comment "Specifies a multidimensional schema on which an analysis situation is defined."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#opArgument
+:opArgument rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf :navigationOperationProperty .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#opDiceLevelInAG
+:opDiceLevelInAG rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf :opArgument ;
+                 rdfs:domain :MoveToLevelAndNode ;
+                 rdfs:range :LevelInAG ;
+                 rdfs:comment "Specifies a value in a navigation operation to be a dice value in the navigation target analysis situation."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#opDiceNodeInAG
+:opDiceNodeInAG rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf :opArgument ;
+                rdfs:domain :MoveToNode ;
+                rdfs:range :LevelMemberInAG ;
+                rdfs:comment "Specifies a value in a navigation operation to be a dice value in the navigation target analysis situation."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#opDimConditionType
+:opDimConditionType rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf :navigationOperationProperty .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#opDimension
+:opDimension rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf :opArgument ;
+             rdfs:domain :DimensionOperation ;
+             rdfs:range qb:DimensionProperty ;
+             rdfs:comment "Specifies the dimension on which a navigation is to be performed."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#opGranularityLevel
+:opGranularityLevel rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf :opArgument ,
+                                       :opGranularityLevelInAG ;
+                    rdfs:domain :ChangeGranularityTo ;
+                    rdfs:range qb4o:LevelProperty ;
+                    rdfs:comment "Specifies a level in a navigation operation to be a level in the navigation target analysis situation (e.g., a dice level or a granularity)."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#opGranularityLevelInAG
+:opGranularityLevelInAG rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf :opArgument ;
+                        rdfs:domain :ResetGranularity ;
+                        rdfs:range :LevelInAG .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#opHierarchy
+:opHierarchy rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf :opArgument ;
+             rdfs:domain :DimensionOperation ;
+             rdfs:range qb4o:Hierarchy ;
+             rdfs:comment "Specifies the dimension on which a navigation is to be performed."@en .
+
+###  http://www.dke.jku.ac.at/swag/ag#opNewDimPredicateInAG
+:opNewDimPredicateInAG rdf:type owl:ObjectProperty ;
+                       rdfs:subPropertyOf :opArgument ;
+                       rdfs:domain :AddDimPredicate ;
+                       rdfs:range :GroundDimensionPredicateInAG .
+
+###  http://www.dke.jku.ac.at/swag/ag#opNewResultMeasureInAG
+:opNewResultMeasureInAG rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf :opArgument ;
+                        rdfs:domain :AddResultMeasure ;
+                        rdfs:range :ResultMeasureInAG ;
+                        rdfs:comment "Specifies a measure speicification for the operation."@en .
+
+###  http://www.dke.jku.ac.at/swag/ag#opNewResultPredicateInAG
+:opNewResultPredicateInAG rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf :opArgument ;
+                          rdfs:domain :AddResultPredicate ;
+                          rdfs:range :GroundResultPredicateInAG ;
+                          rdfs:comment "Specifies a filter conditoin for the operation."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#opOldDimPredicateInAG
+:opOldDimPredicateInAG rdf:type owl:ObjectProperty ;
+                       rdfs:subPropertyOf :opArgument ;
+                       rdfs:domain :RemoveDimPredicate ;
+                       rdfs:range :GroundDimensionPredicateInAG .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#opNewDimPredicatePair
+:opNewDimPredicatePair rdf:type owl:ObjectProperty ;
+                       rdfs:subPropertyOf :opArgument ;
+                       rdfs:domain :RebindDimPredicate ;
+                       rdfs:range :GroundDimensionPredicatePair .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#opOldResultMeasureInAG
+:opOldResultMeasureInAG rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf :opArgument ;
+                        rdfs:domain :RemoveResultMeasure ;
+                        rdfs:range :ResultMeasureInAG .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#opNewResultMeasurePair
+:opNewResultMeasurePair rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf :opArgument ;
+                        rdfs:domain :RebindResultMeasure ;
+                        rdfs:range :ResultMeasurePair .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#opOldResultPredicateInAG
+:opOldResultPredicateInAG rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf :opArgument ;
+                          rdfs:domain :RemoveResultPredicate ;
+                          rdfs:range :GroundResultPredicateInAG .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#opNewResultPredicatePair
+:opNewResultPredicatePair rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf :opArgument ;
+                          rdfs:domain :RebindResultPredicate ;
+                          rdfs:range :GroundResultPredicatePair .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#operation
+:operation rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :navigationStepProperty ;
+           rdfs:domain :NavigationStep ;
+           rdfs:range :NavigationOperation ;
+           rdfs:comment "Connects a navigation step to an operation of the step." .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#parameter
+:parameter rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf owl:topObjectProperty ;
+           rdfs:domain :Pair ;
+           rdfs:range :Parameter .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#predicateMDElement
+:predicateMDElement rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf :predicateOrResultMeasureProperty ;
+                    rdfs:domain :Predicate ;
+                    rdfs:range :ExpressionMDElement .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#predicateOrResultMeasureProperty
+:predicateOrResultMeasureProperty rdf:type owl:ObjectProperty ;
+                                  rdfs:domain :Predicate ;
+                                  rdfs:range :MDElement .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#predicateVariable
+:predicateVariable rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf :predicateOrResultMeasureProperty ;
+                   rdfs:domain :FreePredicate ;
+                   rdfs:range :PredicateVariable ;
+                   rdfs:comment "Specifies a variable of a predicate."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#resultMeasureInAG
+:resultMeasureInAG rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf :analysisSituationProperty ;
+                   rdfs:domain :AnalysisSituation ;
+                   rdfs:range :ResultMeasureInAG ;
+                   rdfs:comment "Specifies a measure for an analysis situation."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#resultPredicateInAG
+:resultPredicateInAG rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf :analysisSituationProperty ;
+                     rdfs:domain :AnalysisSituation ;
+                     rdfs:range :GroundResultPredicateInAG ;
+                     rdfs:comment "Specifies a filter condition to be applied to the result of the analysis situation." .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#source
+:source rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf :navigationStepProperty ;
+        rdfs:domain :NavigationStep ;
+        rdfs:range :AnalysisSituation ;
+        rdfs:comment "Specifies the source analysis situation of a navigation step."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#summarizabilityProperty
+:summarizabilityProperty rdf:type owl:ObjectProperty ;
+                         rdfs:comment "Umbrella abstract object property for summarizability options."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#target
+:target rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf :navigationStepProperty ;
+        rdfs:domain :NavigationStep ;
+        rdfs:range :AnalysisSituation ;
+        rdfs:comment "Specifies the target analysis situation of a navigation step."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#usesAggregationFunction
+:usesAggregationFunction rdf:type owl:ObjectProperty ;
+                         rdfs:subPropertyOf :measureProperty ;
+                         rdfs:domain :ResultMeasure ;
+                         rdfs:comment "Links an aggregated measure to the aggregation function it uses."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#usesMeasure
+:usesMeasure rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf :measureProperty ;
+             rdfs:domain :ResultMeasure ;
+             rdfs:range :NonAggregatedMeasure ;
+             rdfs:comment "Links an aggregated measure to the base-derived measure it aggregates."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#value
+:value rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf :summarizabilityProperty .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.dke.jku.ac.at/swag/ag#connectOver
+:connectOver rdf:type owl:DatatypeProperty ,
+                      owl:FunctionalProperty .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#expression
+:expression rdf:type owl:DatatypeProperty ;
+            rdfs:range xsd:string .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#hasValue
+:hasValue rdf:type owl:DatatypeProperty ,
+                   owl:FunctionalProperty ;
+          rdfs:comment "Specifies a value for a variable, node, etc."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#name
+:name rdf:type owl:DatatypeProperty ;
+      rdfs:range xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://purl.org/linked-data/cube#DataSet
+qb:DataSet rdf:type owl:Class .
+
+
+###  http://purl.org/linked-data/cube#DataStructureDefinition
+qb:DataStructureDefinition rdf:type owl:Class .
+
+
+###  http://purl.org/linked-data/cube#DimensionProperty
+qb:DimensionProperty rdf:type owl:Class ;
+                     rdfs:subClassOf :MDElement .
+
+
+###  http://purl.org/linked-data/cube#MeasureProperty
+qb:MeasureProperty rdf:type owl:Class ;
+                   rdfs:subClassOf :MDElement ,
+                                   :NonAggregatedMeasure .
+
+
+###  http://purl.org/qb4olap/cubes#Hierarchy
+qb4o:Hierarchy rdf:type owl:Class ;
+               rdfs:subClassOf :MDElement .
+
+
+###  http://purl.org/qb4olap/cubes#LevelAttribute
+qb4o:LevelAttribute rdf:type owl:Class ;
+                    rdfs:subClassOf :Attribute .
+
+
+###  http://purl.org/qb4olap/cubes#LevelMember
+qb4o:LevelMember rdf:type owl:Class ;
+                 rdfs:subClassOf :Attribute ,
+                                 :Constant ,
+                                 :LevelMemberInAG .
+
+
+###  http://purl.org/qb4olap/cubes#LevelProperty
+qb4o:LevelProperty rdf:type owl:Class ;
+                   rdfs:subClassOf :Constant ,
+                                   :Level ,
+                                   :LevelInAG .
+
+
+### http://www.dke.jku.ac.at/swag/ag#ResetDiceNode
+:ResetDiceNode rdf:type owl:Class ;
+                   rdfs:subClassOf :MoveToNode .
+
+
+###  http://purl.org/vocommons/voaf#Vocabulary
+voaf:Vocabulary rdf:type owl:Class .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#AddBaseMeasureSelection
+:AddBaseMeasureSelection rdf:type owl:Class ;
+                         rdfs:subClassOf :BaseMeasureOperation ;
+                         rdfs:comment "A navigation operation that adds a base measure selection condition to the set of base measure conditions of the source analysis situation."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#AddDimPredicate
+:AddDimPredicate rdf:type owl:Class ;
+                 rdfs:subClassOf :DimensionSelectionOperation ;
+                 rdfs:comment "A navigation operation that adds a dimension selectoin condition to a specific dimension/hirearchy."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#AddMDPredicate
+:AddMDPredicate rdf:type owl:Class ;
+                rdfs:subClassOf :MDOperation ;
+                rdfs:comment "A navigation operatoin that adds an MD selection condition to the set of MD selection conditions in the source analysis situation."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#AddResultMeasure
+:AddResultMeasure rdf:type owl:Class ;
+                  rdfs:subClassOf :ResultMeasureOperation ;
+                  rdfs:comment "An operator that adds a measure to the set of measures of the source analysis situation."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#AddResultPredicate
+:AddResultPredicate rdf:type owl:Class ;
+                    rdfs:subClassOf :ResultPredicateOperation ;
+                    rdfs:comment "A navigation operation that adds a result selection condition to the set of result selection conditions of the source analysis situation."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#AddTypedDimensionSelectoin
+:AddTypedDimensionSelectoin rdf:type owl:Class ;
+                            rdfs:subClassOf :DimensionSelectionOperation ;
+                            rdfs:comment "Adds a new dimension selection condition to the set selection conditions on a specific diemsnion/hierarchy. The added condition should be of a specific type passed as s parameter ."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#AnalysisGraph
+:AnalysisGraph rdf:type owl:Class ;
+               rdfs:comment "A graph composed of analysis situations connected by navigation steps. An analysis graph plots an analytical process as a successsion of analysis situations connected by navigation steps."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#AnalysisSituation
+:AnalysisSituation rdf:type owl:Class ;
+                   rdfs:comment "An analysis situation is a high level representation of a multidimensional query. An analysis situation may have variables, which are to be bound by user to concrete values."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#Attribute
+:Attribute rdf:type owl:Class ;
+           rdfs:subClassOf :MDElement .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#BaseMeasureOperation
+:BaseMeasureOperation rdf:type owl:Class ;
+                      rdfs:subClassOf :MeasureOperatoin .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#BaseMeasureSpecification
+:BaseMeasureSpecification rdf:type owl:Class ;
+                          rdfs:subClassOf :MeasureSpecification .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#BroadenBaseMeasureSelection
+:BroadenBaseMeasureSelection rdf:type owl:Class ;
+                             rdfs:subClassOf :BaseMeasureOperation .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#BroadenDimPredicate
+:BroadenDimPredicate rdf:type owl:Class ;
+                     rdfs:subClassOf :ReplaceDimPredicate ;
+                     rdfs:comment "Substitutes a dimension selection condition in the set selection conditions on a specific diemsnion/hierarchy by an implying condition passed as s parameter ."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#BroadenResultSelection
+:BroadenResultSelection rdf:type owl:Class ;
+                        rdfs:subClassOf :ReplaceResultPredicate .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#Clause
+:Clause rdf:type owl:Class ;
+        rdfs:subClassOf :PredicateOrResultMeasureElement ;
+        rdfs:comment "Syntactic SPARQL clause used in a predicate."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#Constant
+:Constant rdf:type owl:Class .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#DerivedMeasure
+:DerivedMeasure rdf:type owl:Class ;
+                rdfs:comment "Non-aggregation expression over a base measure."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#Dice
+:Dice rdf:type owl:Class ;
+      rdfs:subClassOf :DimensionSpecification ;
+      rdfs:comment "Restriction of a level to a specific value."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#DiceOperation
+:DiceOperation rdf:type owl:Class ;
+               rdfs:subClassOf :DimensionOperation ;
+               rdfs:comment "Abstract class for dice operations."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#DimensionOperation
+:DimensionOperation rdf:type owl:Class ;
+                    rdfs:subClassOf :NavigationOperation ;
+                    rdfs:comment "Abstract class for operations involving dimensions."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#DimensionSelection
+:DimensionSelection rdf:type owl:Class ;
+                    rdfs:subClassOf :DimensionSpecification ;
+                    rdfs:comment """A slice specification is a part of a dimension specification. 
+		A slice specification is used to restrict the values of a dimension element (i.e., a level or a descriptor) using a condition."""@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#DimensionSelectionOperation
+:DimensionSelectionOperation rdf:type owl:Class ;
+                             rdfs:subClassOf :DimensionOperation;
+                             rdfs:comment "Abstract class for selection operations."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#DimensionSpecification
+:DimensionSpecification rdf:type owl:Class ;
+                        rdfs:subClassOf :Specification ;
+                        rdfs:comment "Element of a qualification of a dimension."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#DimensionSummarizability
+:DimensionSummarizability rdf:type owl:Class ;
+                          rdfs:subClassOf :Summarizability ;
+                          rdfs:comment "Specifies different configurations for generating a query from a dimension qualification." .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#DimensionSummarizabilityConfig
+:DimensionSummarizabilityConfig rdf:type owl:Class ;
+                                rdfs:subClassOf :SummarizabilityConfig .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#DimensionSummarizabilityMode
+:DimensionSummarizabilityMode rdf:type owl:Class ;
+                              rdfs:subClassOf :SummarizabilityMode .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#DrillDown
+:DrillDown rdf:type owl:Class ;
+           rdfs:subClassOf :GranularityOperation ;
+           rdfs:comment "A navigation operation that changes the current granularity level on a dimenion-hierarchy to the level below it in the hierarchy."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#DrillDownTo
+:DrillDownTo rdf:type owl:Class ;
+             rdfs:subClassOf :ChangeGranularityTo ;
+             rdfs:comment "A drill down to a specific level navigation operation that changes the granularity level on a dimenions/hierarchy  to a specific level that is lower it in the hierarchy."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#ExpressionMDElement
+:ExpressionMDElement rdf:type owl:Class ;
+                     rdfs:subClassOf :PredicateOrResultMeasureElement ;
+                     rdfs:comment "Abstract class for MD elements of a predicate or a business term."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#FreeDimensionPredicate
+:FreeDimensionPredicate rdf:type owl:Class ;
+                        rdfs:subClassOf :FreePredicate ;
+                        rdfs:comment "Dimension predicate."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#FreeMDPredicate
+:FreeMDPredicate rdf:type owl:Class ;
+                 rdfs:subClassOf :FreePredicate ;
+                 rdfs:comment "MD conditoin: multiple dimensions are involved."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#FreePredicate
+:FreePredicate rdf:type owl:Class ;
+               rdfs:subClassOf :Predicate .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#FreeResultPredicate
+:FreeResultPredicate rdf:type owl:Class ;
+                     rdfs:subClassOf :FreePredicate ;
+                     rdfs:comment "Filter condition."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#Granularity
+:Granularity rdf:type owl:Class ;
+             rdfs:subClassOf :DimensionSpecification ;
+             rdfs:comment """Abstract class and a part of a dimension specification. 
+											Used to specifiy the granularity level on a dimension"""@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#GranularityOperation
+:GranularityOperation rdf:type owl:Class ;
+                      rdfs:subClassOf :DimensionOperation ;
+                      rdfs:comment "Umbrella Navigation Operation for the operations that change a granularity level of an analysis situation." .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#GroundBaseMeasurePredicate
+:GroundBaseMeasurePredicate rdf:type owl:Class ;
+                            rdfs:subClassOf :GroundBaseMeasurePredicateInAG .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#GroundBaseMeasurePredicateInAG
+:GroundBaseMeasurePredicateInAG rdf:type owl:Class ;
+                                rdfs:subClassOf :BaseMeasureSpecification .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#GroundBaseMeasurePredicatePair
+:GroundBaseMeasurePredicatePair rdf:type owl:Class ;
+                                rdfs:subClassOf :GroundBaseMeasurePredicateInAG .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#GroundDimensionPredicate
+:GroundDimensionPredicate rdf:type owl:Class ;
+                          rdfs:subClassOf :Constant ,
+                                          :GroundDimensionPredicateInAG ,
+                                          :GroundPredicate ;
+                          rdfs:comment "Ground dimension predicate."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#GroundDimensionPredicateInAG
+:GroundDimensionPredicateInAG rdf:type owl:Class ;
+                              rdfs:subClassOf :Value .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#GroundDimensionPredicatePair
+:GroundDimensionPredicatePair rdf:type owl:Class ;
+                              rdfs:subClassOf :GroundDimensionPredicateInAG ,
+                                              :Pair .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#GroundMDPredicate
+:GroundMDPredicate rdf:type owl:Class ;
+                   rdfs:subClassOf :GroundPredicate ;
+                   rdfs:comment "Ground MD predicate."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#GroundPredicate
+:GroundPredicate rdf:type owl:Class ;
+                 rdfs:subClassOf :Predicate ;
+                 rdfs:comment "Ground predicate."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#GroundResultPredicate
+:GroundResultPredicate rdf:type owl:Class ;
+                       rdfs:subClassOf :Constant ,
+                                       :GroundPredicate ,
+                                       :GroundResultPredicateInAG ;
+                       rdfs:comment "Measure ground condition."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#GroundResultPredicateInAG
+:GroundResultPredicateInAG rdf:type owl:Class ;
+                           rdfs:subClassOf :ResultMeasureSpecification ,
+                                           :Value .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#GroundResultPredicatePair
+:GroundResultPredicatePair rdf:type owl:Class ;
+                           rdfs:subClassOf :GroundResultPredicateInAG ,
+                                           :Pair .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#IncompleteDimSummarizabilityConfig
+:IncompleteDimSummarizabilityConfig rdf:type owl:Class ;
+                                    rdfs:subClassOf :DimensionSummarizabilityConfig .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#IncompleteDimensionMode
+:IncompleteDimensionMode rdf:type owl:Class ;
+                         rdfs:subClassOf :DimensionSummarizabilityMode .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#IncompleteMeasureMode
+:IncompleteMeasureMode rdf:type owl:Class ;
+                       rdfs:subClassOf :MeasureSummarizabilityMode .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#IncompleteMsrSummarizabilityConfig
+:IncompleteMsrSummarizabilityConfig rdf:type owl:Class ;
+                                    rdfs:subClassOf :MeasureSummarizabilityConfig .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#Level
+:Level rdf:type owl:Class ;
+       rdfs:subClassOf :MDElement ;
+       rdfs:comment "Abstract class for levels and level variables."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#LevelInAG
+:LevelInAG rdf:type owl:Class ;
+           rdfs:subClassOf :Value .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#LevelMemberInAG
+:LevelMemberInAG rdf:type owl:Class ;
+                 rdfs:subClassOf :Value .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#LevelMemberPair
+:LevelMemberPair rdf:type owl:Class ;
+                 rdfs:subClassOf :LevelMemberInAG ,
+                                 :Pair .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#LevelPropertyPair
+:LevelPropertyPair rdf:type owl:Class ;
+                   rdfs:subClassOf :LevelInAG ,
+                                   :Pair .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#MDElement
+:MDElement rdf:type owl:Class ;
+           rdfs:comment "Abstract class for all MD elements."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#MDOperation
+:MDOperation rdf:type owl:Class ;
+             rdfs:subClassOf :NavigationOperation .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#MDSelection
+:MDSelection rdf:type owl:Class ;
+             rdfs:subClassOf :Specification ;
+             rdfs:comment "Abstract class for selection conditoins over multiple dimensions."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#MeasureOperatoin
+:MeasureOperatoin rdf:type owl:Class ;
+                  rdfs:subClassOf :NavigationOperation ;
+                  rdfs:comment "Abstract class for measure operations."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#MeasureSpecification
+:MeasureSpecification rdf:type owl:Class ;
+                      rdfs:subClassOf :Specification ;
+                      rdfs:comment "Abstract class for measure specification."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#MeasureSummarizability
+:MeasureSummarizability rdf:type owl:Class ;
+                        rdfs:subClassOf :Summarizability ;
+                        rdfs:comment "Specifies different configurations for generating a query from a measure qualification." .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#MeasureSummarizabilityConfig
+:MeasureSummarizabilityConfig rdf:type owl:Class ;
+                              rdfs:subClassOf :SummarizabilityConfig .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#MeasureSummarizabilityMode
+:MeasureSummarizabilityMode rdf:type owl:Class ;
+                            rdfs:subClassOf :SummarizabilityMode .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#MoveAsideToNode
+:MoveAsideToNode rdf:type owl:Class ;
+                 rdfs:subClassOf :DiceOperation .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#MoveDownToNode
+:MoveDownToNode rdf:type owl:Class ;
+                rdfs:subClassOf :DiceOperation ;
+                rdfs:comment "A navigation operatoion that changes the dice node on a dimension/hierarchy to a node that is a member of the level down the current dice level in the hierarchy."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#MoveToLevelAndNode
+:MoveToLevelAndNode rdf:type owl:Class ;
+                    rdfs:subClassOf :MoveToNode ;
+                    rdfs:comment "A navigation operation to change the dice value of a dice specoification to a specific value on a specific dice level."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#MoveToNextNode
+:MoveToNextNode rdf:type owl:Class ;
+                rdfs:subClassOf :DiceOperation ;
+                rdfs:comment "A navigation operation that changes the dice node on a specific dimension/hierarchy to the next node provided that a total ordering funciton between the level members exist." .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#MoveToNode
+:MoveToNode rdf:type owl:Class ;
+            rdfs:subClassOf :DiceOperation .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#MoveToPreviousNode
+:MoveToPreviousNode rdf:type owl:Class ;
+                    rdfs:subClassOf :DiceOperation ;
+                    rdfs:comment "A navigation operation that changes the dice node on a specific dimension/hierarchy to the previous node provided that a total ordering funciton between the level members exist." .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#MoveUpToNode
+:MoveUpToNode rdf:type owl:Class ;
+              rdfs:subClassOf :DiceOperation ;
+              rdfs:comment "A navigation operation that changes the dice node on a dimension/hierarchy to the node that is a member of the level up the current dice level in the hierarchy."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#NarrowBaseMeasureSelection
+:NarrowBaseMeasureSelection rdf:type owl:Class ;
+                            rdfs:subClassOf :BaseMeasureOperation .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#NarrowDimPredicate
+:NarrowDimPredicate rdf:type owl:Class ;
+                    rdfs:subClassOf :ReplaceDimPredicate ;
+                    rdfs:comment "Substitutes a dimension selection condition in the set selection conditions on a specific diemsnion-hierarchy by an implied condition passed as a parameter ."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#NarrowResultSelection
+:NarrowResultSelection rdf:type owl:Class ;
+                       rdfs:subClassOf :ReplaceResultPredicate ;
+                       rdfs:comment "Substitutes a measure selection condition by an implied condition passed as a parameter."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#NavigationOperation
+:NavigationOperation rdf:type owl:Class ;
+                     rdfs:comment "An abstract class that represents a navigation operation. All navigation operations are subclasses of this class."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#NavigationStep
+:NavigationStep rdf:type owl:Class ;
+                rdfs:comment "A navigation step is a set of OLAP operations that transforms the source analysis situation to the target analysis situation. A navigation step has a source analysis situation and a target analysis situation."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#NonAggregatedMeasure
+:NonAggregatedMeasure rdf:type owl:Class ;
+                      rdfs:subClassOf :BaseMeasureSpecification .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#NonStrictDimSummarizabilityConfig
+:NonStrictDimSummarizabilityConfig rdf:type owl:Class ;
+                                   rdfs:subClassOf :DimensionSummarizabilityConfig .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#NonStrictDimensionMode
+:NonStrictDimensionMode rdf:type owl:Class ;
+                        rdfs:subClassOf :DimensionSummarizabilityMode .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#NonStrictMeasureMode
+:NonStrictMeasureMode rdf:type owl:Class ;
+                      rdfs:subClassOf :MeasureSummarizabilityMode .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#NonStrictMsrSummarizabilityConfig
+:NonStrictMsrSummarizabilityConfig rdf:type owl:Class ;
+                                   rdfs:subClassOf :MeasureSummarizabilityConfig .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#Pair
+:Pair rdf:type owl:Class .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#Parameter
+:Parameter rdf:type owl:Class .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#Predicate
+:Predicate rdf:type owl:Class ;
+           rdfs:comment "A predicate specifies a selection condition that can be evaluated to true or false."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#PredicateOrResultMeasureElement
+:PredicateOrResultMeasureElement rdf:type owl:Class ;
+                                 rdfs:comment "Abstract class for predicate elements."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#PredicateVariable
+:PredicateVariable rdf:type owl:Class ;
+                   rdfs:subClassOf :PredicateOrResultMeasureElement ;
+                   rdfs:comment "A predicate predicate variable can be bound to a concrete value allowing for reusable predicates."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#QualifiedAttribute
+:QualifiedAttribute rdf:type owl:Class ;
+                    rdfs:subClassOf :Attribute ;
+                    rdfs:comment "Allows a fully qualified specification of an attribute, i.e., dimension, hierarchy, level, and attribute."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#QualifiedLevel
+:QualifiedLevel rdf:type owl:Class ;
+                rdfs:subClassOf :Level ;
+                rdfs:comment "Allows a fully qualified specification of a level, i.e., dimension, hierarchy, and level."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#RebindDimPredicate
+:RebindDimPredicate rdf:type owl:Class ;
+                    rdfs:subClassOf :DimensionSelectionOperation .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#RebindResultMeasure
+:RebindResultMeasure rdf:type owl:Class ;
+                     rdfs:subClassOf :ResultMeasureOperation .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#RebindResultPredicate
+:RebindResultPredicate rdf:type owl:Class ;
+                       rdfs:subClassOf :ResultPredicateOperation .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#RemoveBaseMeasureSelection
+:RemoveBaseMeasureSelection rdf:type owl:Class ;
+                            rdfs:subClassOf :BaseMeasureOperation ;
+                            rdfs:comment "A navigation operation that removes a base measure selection condition from the set of base measure conditions of the source analysis situation." .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#RemoveDimPredicate
+:RemoveDimPredicate rdf:type owl:Class ;
+                    rdfs:subClassOf :DimensionSelectionOperation ;
+                    rdfs:comment "A navigation operation that removes a selection condition from the set of selection conditions of a dimension of the source analysis situation." .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#RemoveMDPredicate
+:RemoveMDPredicate rdf:type owl:Class ;
+                   rdfs:subClassOf :MDOperation ;
+                   rdfs:comment "A navigation operation that removes an MD selection condition from the set MD conditions of the source analysis situation." .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#RemoveResultMeasure
+:RemoveResultMeasure rdf:type owl:Class ;
+                     rdfs:subClassOf :ResultMeasureOperation ;
+                     rdfs:comment "A navigation operation that removes a measure from the set of measures of the source analysis situation." .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#RemoveResultPredicate
+:RemoveResultPredicate rdf:type owl:Class ;
+                       rdfs:subClassOf :ResultPredicateOperation ;
+                       rdfs:comment "A navigation operation that removes a filter condition from the set of filter conditions of the source analysis situation."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#ReplaceDimPredicate
+:ReplaceDimPredicate rdf:type owl:Class ;
+                     rdfs:subClassOf :DimensionSelectionOperation , :AddDimPredicate, :RemoveDimPredicate.
+
+
+###  http://www.dke.jku.ac.at/swag/ag#ReplaceResultMeasure
+:ReplaceResultMeasure rdf:type owl:Class ;
+                      rdfs:subClassOf :AddResultMeasure ,
+                                      :RemoveResultMeasure ,
+                                      :ResultMeasureOperation .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#ReplaceResultPredicate
+:ReplaceResultPredicate rdf:type owl:Class ;
+                        rdfs:subClassOf :AddResultPredicate ,
+                                        :RemoveResultPredicate ,
+                                        :ResultPredicateOperation .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#ResetGranularity
+:ResetGranularity rdf:type owl:Class ;
+                  rdfs:subClassOf :GranularityOperation .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#ResultMeasure
+:ResultMeasure rdf:type owl:Class ;
+               rdfs:subClassOf :Constant ,
+                               :MDElement ,
+                               :ResultMeasureInAG ;
+               rdfs:comment "Aggregation expression over a measure."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#ResultMeasureInAG
+:ResultMeasureInAG rdf:type owl:Class ;
+                   rdfs:subClassOf :ResultMeasureSpecification ,
+                                   :Value .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#ResultMeasureOperation
+:ResultMeasureOperation rdf:type owl:Class ;
+                        rdfs:subClassOf :ResultOperation .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#ResultMeasurePair
+:ResultMeasurePair rdf:type owl:Class ;
+                   rdfs:subClassOf :Pair ,
+                                   :ResultMeasureInAG .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#ResultMeasureSpecification
+:ResultMeasureSpecification rdf:type owl:Class ;
+                            rdfs:subClassOf :MeasureSpecification .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#ResultOperation
+:ResultOperation rdf:type owl:Class ;
+                 rdfs:subClassOf :MeasureOperatoin .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#ResultPredicateOperation
+:ResultPredicateOperation rdf:type owl:Class ;
+                          rdfs:subClassOf :ResultOperation .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#RollUp
+:RollUp rdf:type owl:Class ;
+        rdfs:subClassOf :GranularityOperation ;
+        rdfs:comment "A navigation operation that changes the current granularity level on a dimenion/hierarchy to the level up in the hierarchy."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#RollUpTo
+:RollUpTo rdf:type owl:Class ;
+          rdfs:subClassOf :ChangeGranularityTo ;
+          rdfs:comment "A roll up to a specific level navigation operator that changes the granularity level on a dimenions/hierarchy  to a specific level that is higher it in the hierarchy."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#SetGranularity
+:SetGranularity rdf:type owl:Class ;
+                rdfs:subClassOf :ChangeGranularityTo ;
+                rdfs:comment "Navigation Operation that change a granularity level of an analysis situation to a particular new level." .
+
+###  http://www.dke.jku.ac.at/swag/ag#ChangeGranularityTo
+:ChangeGranularityTo rdf:type owl:Class ;
+                     rdfs:subClassOf :GranularityOperation ;
+                     rdfs:comment "Abstract Navigation Operation for the operations that change a granularity level of an analysis situation (possibly up or down the hierarchy)." .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#Specification
+:Specification rdf:type owl:Class ;
+               rdfs:comment "Abstract class for specifications, e.g., dimension specification or measure specification."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#Summarizability
+:Summarizability rdf:type owl:Class ;
+                 rdfs:comment "An abstract class. A configuration defines how the queries are to be genrated from an analysis situation's element, e.g., a dimension qualification or a measure specification." .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#SummarizabilityConfig
+:SummarizabilityConfig rdf:type owl:Class .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#SummarizabilityMode
+:SummarizabilityMode rdf:type owl:Class ;
+                     rdfs:comment "An abstract class for possible configurations." .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#Topic
+:Topic rdf:type owl:Class ;
+       rdfs:subClassOf :PredicateOrResultMeasureElement .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#Value
+:Value rdf:type owl:Class ;
+       rdfs:comment "Actual value."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#Variable
+:Variable rdf:type owl:Class ;
+          rdfs:comment "A variable is like a plcae holder on a specific element of an analysis situation / navigation step. A variable can encode further information, e.g., the type of the variable representing the set of potential values, etc."@en .
+
+
+###  http://www.dke.jku.ac.at/swag/smd#MDSchema
+smd:MDSchema rdf:type owl:Class .
+
+
+###  http://www.w3.org/2000/01/rdf-schema#Datatype
+rdfs:Datatype rdf:type owl:Class .
+
+
+###  http://www.w3.org/2001/XMLSchema#String
+xsd:String rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://purl.org/qb4olap/cubes#Avg
+qb4o:Avg rdf:type owl:NamedIndividual .
+
+
+###  http://www.dke.jku.ac.at/swag/ag
+<http://www.dke.jku.ac.at/swag/ag> rdf:type owl:NamedIndividual ,
+                                            voaf:Vocabulary .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#All
+:All rdf:type owl:NamedIndividual .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#Avg
+:Avg rdf:type owl:NamedIndividual .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#BaseLevel
+:BaseLevel rdf:type owl:NamedIndividual .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#DefaultValue
+:DefaultValue rdf:type owl:NamedIndividual ,
+                       :IncompleteMeasureMode .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#DiscardFact
+:DiscardFact rdf:type owl:NamedIndividual ,
+                      :IncompleteDimensionMode ,
+                      :IncompleteMeasureMode .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#InternAggregation
+:InternAggregation rdf:type owl:NamedIndividual ,
+                            :NonStrictMeasureMode .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#Optional
+:Optional rdf:type owl:NamedIndividual .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#Other
+:Other rdf:type owl:NamedIndividual ,
+                :IncompleteDimensionMode .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#Sets
+:Sets rdf:type owl:NamedIndividual ,
+               :NonStrictDimensionMode .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#SplitByWeight
+:SplitByWeight rdf:type owl:NamedIndividual ,
+                        :NonStrictDimensionMode .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#SplitEqually
+:SplitEqually rdf:type owl:NamedIndividual ,
+                       :NonStrictDimensionMode .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#SubElement
+:SubElement rdf:type owl:NamedIndividual ,
+                     :IncompleteDimensionMode .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#TreatAsFact
+:TreatAsFact rdf:type owl:NamedIndividual ,
+                      :NonStrictDimensionMode ,
+                      :NonStrictMeasureMode .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#defaultDimConfig
+:defaultDimConfig rdf:type owl:NamedIndividual ,
+                           :DimensionSummarizability ;
+                  :incomplete :Other ;
+                  :nonStrict :TreatAsFact .
+
+
+###  http://www.dke.jku.ac.at/swag/ag#defaultMsrConfig
+:defaultMsrConfig rdf:type owl:NamedIndividual ,
+                           :MeasureSummarizability .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
