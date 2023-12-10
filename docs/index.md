@@ -1,3 +1,7 @@
+# General
+* [AG Vocabulary](general/vocabulary/AG.ttl)
+* [AG for Asylum Applications](general/vocabulary/eurostat_AG.ttl)
+* [Predicates for Asylum Applications](general/vocabulary/predicates.ttl)
 
 # Chapter 4: Enriched Multidimensional Model
 * [Tables 4.4 and 4.5 - SPARQL queries to retrieve the MD elements and instances](chapter 4/queries.txt)
@@ -33,9 +37,11 @@
 * [Reporting](chapter 10/reporting tests.txt)
 
 # Chapter 11: SWAG-BI Proof of Concept Prototype
-* [Data Set - Table 10.1](chapter 10/chapter_10_wikidata_summ_data.ttl)
-* [Dimension Inceompleteness Queries](chapter 10/dimension-incompleteness.txt)
-* [Dimension Non-Strictness Queries](chapter 10/dimension-non-strictness.txt)
-* [Measure Inceompleteness Queries](chapter 10/measure-incompleteness.txt)
-* [Measure Non-Strictness Queries](chapter 10/measure-non-strictness.txt)
-* [Reporting](chapter 10/reporting tests.txt)
+* [SWAG-BI Website (from AMCIS Publication 2021)](https://github.com/swag-bi/swag)
+* [SWAG-BI Source Code (from AMCIS Publication 2021)](https://github.com/swag-bi/swag)
+* [SWAG-BI Demo Video (from AMCIS Publication 2021)](https://swag-bi.github.io/swag/demo.html)
+
+# Chapter 12: Evaluation
+* [Questionnaire](https://swag-bi.github.io/swag/usability/questionnaire.pdf)
+* [Script](https://swag-bi.github.io/swag/usability/script.pdf)
+* [Data](https://swag-bi.github.io/swag/usability/data.csv)
