@@ -1,4 +1,5 @@
 # General
+* [SWAG implementation](https://github.com/median-hilal/swag_core)
 * [AG Vocabulary](general/vocabulary/AG.ttl)
 * [AG for Asylum Applications](general/vocabulary/eurostat_AG.ttl)
 * [Predicates for Asylum Applications](general/vocabulary/predicates.ttl)
