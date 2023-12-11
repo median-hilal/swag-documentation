@@ -17,6 +17,7 @@
 * [Observations](chapter 5/observations.ttl)
 
 # Chapter 7: Semantic Web Analysis Graphs
+* [Semantics Preservation Proofs](chapter 7/semantics_preservation.pdf)
 
 # Chapter 8: OLAP Patterns
 * [EBNF Grammar - Listing 8.4](chapter 8/ebnf grammar.txt)
