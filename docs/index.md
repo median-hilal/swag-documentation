@@ -42,7 +42,7 @@
 * [SWAG-BI Website (from AMCIS Publication 2021)](https://github.com/swag-bi/swag)
 * [SWAG-BI Source Code (from AMCIS Publication 2021)](https://github.com/swag-bi/swag)
 * [SWAG-BI Demo Video (from AMCIS Publication 2021)](https://swag-bi.github.io/swag/demo.html)
-* [Current Implementation] (https://github.com/median-hilal/swag)
+* [Current Implementation](https://github.com/median-hilal/swag)
 
 # Chapter 12: Evaluation
 * [Questionnaire (from AMCIS Publication 2021)](https://swag-bi.github.io/swag/usability/questionnaire.pdf)
