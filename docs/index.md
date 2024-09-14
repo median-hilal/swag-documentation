@@ -29,6 +29,7 @@
 * [Mapping Queries - Table 9.3](chapter_9/mapping queries.txt)
 * [Mapping Queries with Labels - Table 9.3](chapter_9/mapping queries with labels.txt)
 * [Grouping and Aggregation Queries](chapter_9/grouping and aggregation queries.txt)
+* [SPARQL Proofs](chapter_9/sprql proofs - new.pdf)
 
 # Chapter 10: Aggregation Handling Framework
 * [Data Set - Table 10.1](chapter_10/chapter_10_wikidata_summ_data.ttl)
